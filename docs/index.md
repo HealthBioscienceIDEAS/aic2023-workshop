@@ -11,16 +11,16 @@ nav_order: 1
 
 |  |  |
 | --- | --- |
-| Date | Friday 29th July 2022 |
-| Time | 1-5 PM PST | 
-| Location | Hilton San Diego Bayfront, San Diego, CA |
+| Date | Friday 14th July 2023 |
+| Time | 8-12 AM GMT+2 | 
+| Location | Amsterdam, Netherlands |
 | Format | In-person workshop | 
 
 ### Target Audience
-This hands-on workshop can serve as a beginners or refresher course for established investigators, clinicians, and trainees involved in the use of imaging techniques in the study of Alzheimer’s disease, related disorders and normal aging.
+This hands-on workshop can serve as a beginner or refresher course for established investigators, clinicians, and trainees involved in the use of imaging techniques in the study of Alzheimer’s disease, related disorders and normal aging. Participants from any career stage are encouraged to join, including undergraduate students, graduate students, post-doctoral researchers and assistant professors engaged in clinical practice, research or teaching.
 
 ### Requirements
-Registrants will be required to bring their own laptops.  We will be asking attendees for specifications for the laptops, so that we can best manage the workshop. We will all be using a standard environment for this workshop, using a virtual machine (VM), either on your laptop or on the cloud. This ensures that everyone will be seeing the exact same screen for these lessons, regardless of if you are using a Mac or Windows operating system. You can find out more how to access this virtual machine in the [Connecting](./connecting.md) section.
+Registrants will need to bring their own laptop to do the exercises (tablets or smartphones will not be sufficient). They will be provided with this repository and links to the "Basics of Neuroimaging" series of AAIC webinars that are occuring in April 2023. At the workshop,we will all be using a standard environment, using a virtual machine (VM) hostedn on  the cloud. This ensures that everyone will be seeing the exact same screen for these lessons, regardless of if you are using a Mac or Windows operating system. You can find out more how to access this virtual machine in the [Connecting](./connecting.md) section.
 
 ### Workshop description
 The workshop will provide practical information and an enhanced understanding on how to work with and analyze medical imaging data from magnetic resonance imaging (MRI) and positron imaging tomography (PET).
@@ -31,20 +31,24 @@ Subsequent lectures will be followed by interactive sessions to demonstrate simp
 
 
 ### Agenda
-This is the tentative agenda for the workshop. You can find links to all of the individual lessons below. Much of it will be self-paced with facilitation by the members of the organizing committee, so if people want to focus more time on some areas than others, they are welcome to.  
+The workshop will consist of hands-on interactive sessions. The first session will focus on understanding of the basic structure of imaging data, how to traverse images, data extraction, and how voxels relate to world coordinates. We will then go through the basic processing steps involving structural MRI data, demonstrating simple workflows including tissue segmentation, and registration. The second half will consist of two independent working sessions, where facilitators will present interactive tutorials around different forms of neuroimaging analysis (structural MRI, fMRI, DTI or PET data), and the participants will then work on the tutorials of their choice, with assistance from the facilitators. The objective of the workshop is to ensure participants gain an understanding of how to start processing and analyzing various imaging modalities used in dementia research. 
 
 | Time | Topic | Leader(s) | 
 | --- | --- | --- |
-| 1 PM | Opening Remarks | David Cash |
-| 1:15 PM | Getting started: [command line](./command-line.md) and [image data](./imaging-data.md) | Ludovica Griffanti, David Cash |
-| 2 PM | [Structural MRI](./structural-mri.md) | Alexis Moscoso, Tobey Betthauser |
-| 2:45 PM | Break | |
-| 3 PM | Q&A/Progress check | |
-| 3:15 PM | [Pre-processing: fMRI](./fmri-preproc.md) | Luigi Lorenzini |
-| 4 PM | [Pre-processing: DTI](./dmri-preproc.md) | Alexa Pichet Binette | 
-| 4:45 PM | Closing Remarks | David Cash |
+| 8:00-8:10 AM | Opening Remarks | David Cash and Tobey Betthauser |
+| 8:10-8:40 AM |  [Image data: Basic Structure and Function](./imaging-data.md) | Ludovica Griffanti |
+| 8:40-9:10 AM| [Structural MRI](./structural-mri.md) | David Cash |
+| 9:10-9:20 AM | Break | |
+| 9:20-9:50 AM | Introduction to Advanced Imaging Analysis Sections (PET,DT,fMRI) | Tobey Betthauser, Alexa Pichet Binette, Luigi Lorenzini |
+| 9:50-10:40 AM | Independent working session 1: [DMRI](./dmri-preproc.md), [fMRI](./fmri-preproc.md) or [PET](./pet.md)  | Facilitated by all organizers |
+| 10:40-11:50 AM | Break | |
+| 10:50-11:40 AM | Independent working session 2: [DMRI](./dmri-preproc.md), [fMRI](./fmri-preproc.md) or [PET](./pet.md)   | Facilitated by all organizers |
+| 11:40 AM - 12:00 PM | Wrapup, Q&A, feedback | David Cash and Tobey Betthauser |
 
 
+### Additional material
+Lessons and information that are helpful, but not part of the workshop can be found below:
+* [Getting started with the command line](./command-line.md): Many neuroimaging software packages do not use a graphical interface but require you to be comfortable typing in commands into the computer. This section gives an overview of some basic commands and how to traverse a Linux filesystem.
 
 ### Organizing Committee
 The following committee members have been developing and testing the content, and will be on-hand to lead the sessions and assist individuals. 
@@ -53,7 +57,6 @@ The following committee members have been developing and testing the content, an
 | --- | --- |
 | David M. Cash, Ph.D. | UCL Queen Square Institute of Neurology, United Kingdom
 | Luigi Lorenzini | Amsterdam UMC, Netherlands |
-| Alexis Moscoso | University of Göthenborg, Sweden | 
 | Ludovica Griffanti | University of Oxford, United Kingdom |
 | Tobey Betthauser | University of Wisconsin, U.S.A. | 
 | Alexa Pichet Binette | Lund University, Sweden |
