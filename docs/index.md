@@ -21,7 +21,9 @@ This hands-on workshop can serve as a beginner or refresher course for establish
 
 ### Requirements
 Registrants will need to bring their own laptop to do the exercises (tablets or smartphones will not be sufficient). They will be provided with this repository and links to the "Basics of Neuroimaging" series of AAIC webinars that are occuring in April 2023. The links to the webinars and the slides are below.
-| Webinar Tite | Slides |
+
+
+| Webinar Title | Slides |
 | --- | --- |
 | [Data Structure and Formats](https://training.alz.org/products/4520/neuroimaging-pia-basics-of-neuroimaging-data-structure-and-formats) |[Slides](./assets/1_BasicsNeuroimaging_StructureFormat-Griffanti.pdf) | 
 | [The Basics of Neuroimaging: Structural Magnetic Resonance Imaging (MRI)](https://training.alz.org/products/4524/neuroimaging-pia-the-basics-of-neuroimaging-structural-magnetic-resonance-imaging-mri) | [Slides](./assets/2_BasicsNeuroimaging_StructuralMRI-Cash.pdf) | 
