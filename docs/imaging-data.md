@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Image Data - Structure and Visualization
+title: Data Structure and Formats
 nav_order: 2
 ---
 ## Properties of medical imaging data
