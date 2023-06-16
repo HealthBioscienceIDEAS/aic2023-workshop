@@ -6,6 +6,7 @@ nav_order: 5
 
 ## Introduction to diffusion-weighted imaging (DWI)
 TODO: Update the text with new file names and locations.
+The data will be under ~/data.
 
 Now that you know the basics behind the principles of DWI, let's first look at the raw data together!
 
