@@ -1,10 +1,11 @@
 ---
 layout: default
-title: Structural MRI - Bias Correction, Segmentation and Image Registration
-nav_order: 5
+title: Structural MRI 
+nav_order: 3
 ---
 
-# Structural MRI - Bias Correction, Segmentation and Image Registration
+# Structural Magnetic Resonance Imaging (MRI)
+# Bias Correction, Segmentation and Image Registration
 
 ## Introduction
 In this section, you will be learning how to process and quantify structural MRI scans. T1-weighted structural MRI scans are the "workhorse" scan of dementia research. They provide high-resolution, detailed pictures of a patients anatomy, allowing researchers to visualize where atrophy caused by Alzheimer's disease or other dementias is occurring. In addition, it provides anatomical reference to other imaging modalities, such as functional MRI and positron emission tomography (PET), that provide lower resolution maps of brain function and pathology, so that regional quantification of key areas can be assessed in these scans.

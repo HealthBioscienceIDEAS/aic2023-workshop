@@ -31,7 +31,7 @@ Registrants will need to bring their own laptop to do the exercises (tablets or 
 | [Diffusion-Weighted Imaging (DWI)](https://training.alz.org/products/4526/neuroimaging-pia-the-basics-of-neuroimaging-diffusion-weighted-imaging-dwi) | [Slides](./assets/4_BasicsNeuroimaging_Diffusion_AlexaPB.pdf) |
 | [Functional Magnetic Resonance Imaging (fMRI)](https://training.alz.org/products/4528/neuroimaging-pia-the-basics-of-neuroimaging-functional-magnetic-resonance-imaging-fmri) | [Slides](./assets/5_BasicsNeuroimaging_Functional_Luigi.pdf) |
 
-At the workshop, we will all be using a standard environment, using a virtual machine (VM) hostedn on the cloud. This ensures that everyone will be seeing the exact same screen for these lessons, regardless of if you are using a Mac or Windows operating system. You can find out more how to access this virtual machine in the [Connecting](./connecting.md) section.
+At the workshop,we will all be using a standard environment, using a virtual machine (VM) hostedn on  the cloud. This ensures that everyone will be seeing the exact same screen for these lessons, regardless of if you are using a Mac or Windows operating system. You can find out more how to access this virtual machine in the [Connecting](./extras/connecting.md) section.
 
 ### Workshop description
 The workshop will provide practical information and an enhanced understanding on how to work with and analyze medical imaging data from magnetic resonance imaging (MRI) and positron imaging tomography (PET).
@@ -63,7 +63,7 @@ The second half will consist of two independent working sessions, where facilita
 
 ### Additional material
 Lessons and information that are helpful, but not part of the workshop can be found below:
-* [Getting started with the command line](./command-line.md): Many neuroimaging software packages do not use a graphical interface but require you to be comfortable typing in commands into the computer. This section gives an overview of some basic commands and how to traverse a Linux filesystem.
+* [Getting started with the command line](./extras/command-line.md): Many neuroimaging software packages do not use a graphical interface but require you to be comfortable typing in commands into the computer. This section gives an overview of some basic commands and how to traverse a Linux filesystem.
 
 ### Organizing Committee
 The following committee members have been developing and testing the content, and will be on-hand to lead the sessions and assist individuals. 

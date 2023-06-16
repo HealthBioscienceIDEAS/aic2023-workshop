@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Preprocessing diffusion weighted imaging
-nav_order: 7
+title: Diffusion-weighted imaging (DWI)
+nav_order: 5
 ---
 
 ## Introduction to diffusion-weighted imaging (DWI)

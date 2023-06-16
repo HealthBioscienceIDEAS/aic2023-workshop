@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Pre-processing fMRI data
-nav_order: 8
+title: Functional Magnetic Resonance Imaging (fMRI)
+nav_order: 6
 ---
 
 # Introduction to Resting-state Functional MRI: A Short Pre-Processing Tutorial 
