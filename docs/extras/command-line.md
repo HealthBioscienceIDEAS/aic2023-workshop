@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Using the Command Line
-parent: extras
+parent: Additional material
 nav_order: 2
 ---
 

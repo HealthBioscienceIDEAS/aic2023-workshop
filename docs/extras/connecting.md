@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Connecting to your Machine
-parent: extras
+parent: Additional material
 nav_order: 3
 ---
 
