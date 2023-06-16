@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Additional material
-nav_order: 1
+has_children: true
+nav_order: 7
 ---
 
 This section contains additional material which you will find helpful for the workshop. It currently includes:

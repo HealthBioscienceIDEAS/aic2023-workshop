@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Using the Command Line
+parent: extras
 nav_order: 2
 ---
 

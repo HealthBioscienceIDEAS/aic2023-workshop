@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Connecting to your Machine
+parent: extras
 nav_order: 3
 ---
 
