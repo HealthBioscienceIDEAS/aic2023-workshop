@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Using the Command Line
-nav_order: 8
+nav_order: 2
 ---
 
 ## Why use the command line?

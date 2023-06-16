@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Connecting to your Machine
-nav_order: 9
+nav_order: 3
 ---
 
 This page will tell you how to access your personal virtual (VM) to run these lessons. The virtual machine is essentially a "computer within a computer". For this workshop, we have created virtual machines that have all the necessary software to perform the lessons. 
