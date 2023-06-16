@@ -7,11 +7,11 @@ nav_order: 2
 ## Why use the command line?
 In order to get started with neuroimaging analysis, it is really helpful to first understand how to interact with a computer on the command line called the shell. At first look, it's pretty bare bones and minimalist. How can this simple way of interacting with a computer be so useful?
 
-![Command line picture](./assets/CommandLine.png)
+![Command line picture](../assets/CommandLine.png)
 
 Nowadays, we usually interact with a computer using a *Graphical User Interface* or a GUI. These include programs like Word, Chrome, iTunes which allow you to interact using your mouse to press buttons, select options, move sliders, change values, etc. It provides a simple, intuitive way for us to access the essential functionality that we need from these programs. Some neuroimaging analysis software does comes with a GUI, like this one from the Statistical Parametric Mapping (SPM) toolbox, a popular MATLAB based package.
 
-![Example of SPM GUI](./assets/spm_gui.jpg)
+![Example of SPM GUI](../assets/spm_gui.jpg)
 
 ### Benefits of the command line
 While GUIs are often the best way to interact with your computer, using the command line for neuroimaging analysis is tremendously powerful for many reasons:
@@ -22,13 +22,13 @@ While GUIs are often the best way to interact with your computer, using the comm
 
 ## Getting started
 In this section, we are going to go through some basic steps of working with the command line. Make sure you are able to connect to your working environment by following the directions in the [Connecting](./connecting.md) section of this website. As a reminder, you should have a desktop on your virtual machine that looks something like this:
-![Desktop screenshot](./assets/desktop_screenshot.png)
+![Desktop screenshot](../assets/desktop_screenshot.png)
 At the bottom of the the screen, you will see a taskbar. One of the icons is a black box with a white dollar sign in it. That will launch the shell (Terminal Emulator) to give you access to the command line. Click on that to launch the terminal.
-![Terminal launch at bottom](./assets/launch_terminal.png)
+![Terminal launch at bottom](../assets/launch_terminal.png)
 
 ## Navigating the file structure
 The desktop of your virtual machine will have a black window with green text in it. This is the shell. We will enter some commands and see what the responses are.
-![Open terminal](./assets/open_terminal.png)
+![Open terminal](../assets/open_terminal.png)
 1. The first thing we are going to do is figure out where we are. We do that using the command `pwd` which stands for *present working directory*. Type it in the command line and see what the response is:
     ```shell
     pwd
