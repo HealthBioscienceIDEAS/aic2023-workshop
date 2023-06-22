@@ -27,22 +27,27 @@ From the previous lesson, you should be able to use `fsleyes` to open up the ima
 **TODO: Screenshot of FSLEYES with data
 Now open up the other image in the folder: what differences do you notice?
 
-## Running Bias Correction and Tissue Segmentation
+## Run Bias Correction and Tissue Segmentation
 SPM simultaneously performs bias correction tissue segmentation: the assignment of probability that a voxel contains key tissue types and 
 STEPS:
 1. Open up a terminal (screenshots)
 1. Type `spm pet` to launch SPM (screenshot)
 1. From main menu, select the Segment button (Screenshots). This will launch a window known as the *batch editor*, where you can adjust settings on the pipeline to be run.
 1. Edit the options for segmentation:
-   a. Under Data->Channels->Volume, click on "Specify...".
-   a. In the dialog box that opens up, please navigate to the folder `data` and then `StructuralMRI`. Then select the first
+  a. Under Data->Channels->Volume, click on "Specify...".
+  a. In the dialog box that opens up, please navigate to the folder `data` and then `StructuralMRI`. Then select the first
    image `sub-OAS30003_T1w.nii`. Once you click on it, you will notice the file move down to the bottom of the box which represents
    the list of selected files.
-   a. Click the Done button
-   a. Back in the batch editor, under Data->Save Bias Corrected, please choose "Save Field and Corrected"
-   a. Under the Tissues section, please make sure that the final three tissue entries have both native and warped tissue set to none.
-   a. Click the green run button to start! It should take about 10 minutes. You will see a lot of other things happening in other widows.
-   
+  a. Click the Done button
+  a. Back in the batch editor, under Data->Save Bias Corrected, please choose "Save Field and Corrected"
+  a. Under the Tissues section, please make sure that the final three tissue entries have both native and warped tissue set to none.
+1. Click the green run button to start! It should take about 5-10 minutes. You will see a lot of other things happening in other windows. The terminal will say `Done - Segment` when it has finished.
+ 
+### Quality check
+The quality check is an important pare of any analysis. We are going to open and check out how the bias correction and then the segmentation has worked. 
+1. Use `fsleyes` again and open up the original image `sub-OAS30003_T1w.nii` using the `Add image` menu item under File.
+2. Change the image lookup table to `NIH` (screenshot) and change the image minimum to 40 and the maximum to 600.
+3. Next add the  bias corrected image, which is called  `msub-OAS30003_T1w.niiz.    
 
 Now look at the original image, bias-corrected image (colormaps), and tissue-segmented image
 
