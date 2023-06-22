@@ -50,8 +50,10 @@ The quality check is an important pare of any analysis. We are going to open and
 Now look at the original image, bias-corrected image (colormaps), and tissue-segmented image
 
 ## Obtaining volume
-One thing that we are often interested in is to obtain the actual volume of grey matter, or a particular brain region. 
-fslstats c1...
+One thing that we are often interested in is to obtain the actual volume of grey matter, or a particular brain region. This will give you total grey matter volume:
+```bash
+fslstats c1sub-OAS30003_T1w.nii -V
+```
 
 ## Bias correction
 Magnetic resonance images often exhibit image intensity non-uniformities that are the result of magnetic field variations rather than anatomical differences. These variations are often seen as a signal gain change that varies slowly spatially. This can result in white matter voxels in one part of the brain having similar intensities to voxels with the same intensity as grey matter in other parts of the brain. However, the intensities in the white matter voxels should be more or less uniform throughout the brain. Any remaining inhomogeneity in the image can significantly influence the results of automatic segmentations, so we need to correct for these effects. 
