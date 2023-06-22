@@ -8,119 +8,46 @@ nav_order: 3
 # Bias Correction, Segmentation and Image Registration
 
 ## Introduction
-In this section, you will be learning how to process and quantify structural MRI scans. T1-weighted structural MRI scans are the "workhorse" scan of dementia research. They provide high-resolution, detailed pictures of a patients anatomy, allowing researchers to visualize where atrophy caused by Alzheimer's disease or other dementias is occurring. In addition, it provides anatomical reference to other imaging modalities, such as functional MRI and positron emission tomography (PET), that provide lower resolution maps of brain function and pathology, so that regional quantification of key areas can be assessed in these scans.
+In this section, you will be learning how to process and quantify structural MRI scans. T1-weighted structural MRI scans are the "workhorse" scan of dementia research. They provide high-resolution, detailed pictures of a patient's anatomy, allowing researchers to visualize where atrophy caused by Alzheimer's disease or other dementias is occurring. In addition, it provides anatomical reference to other imaging modalities, such as functional MRI and positron emission tomography (PET), that provide lower-resolution maps of brain function and pathology, so that regional quantification of key areas can be assessed in these scans.
 
- We will be using [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/), a software package for the analysis and visualization of structural and functional neuroimaging data that can be used in both cross-sectional or longitudinal studies. It is a "one stop shop" that can perform a complete neuroimaging analysis of a structural MRI scan. The subsequent outputs from this pipeline can be used to aid in the quantification of other imaging modalities. It is one of the most widely used imaging analysis packages in dementia research.
+We will be using two widely used software packages: [SPM](https://www.fil.ion.ucl.ac.uk/spm/) and [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki). These packages provide analysis and visualization functionality of structural and functional neuroimaging data, and they can be used in both cross-sectional and longitudinal studies. The subsequent outputs from these pipelines can be used in the quantification of other imaging modalities. 
 
-After the course, you will be able to compute measures relevant to  dementia research from structural MRI brain scans, such as the cortical thickness of a previously defined region of interest (Jack et al. Alzheimers Dement. 2017) or the global amyloid PET signal to establish whether a subject is amyloid-positive or negative (Mormino et al. Brain. 2009). 
+After the course, you will be able to perform basic measurements relevant to  dementia research from structural MRI brain scans. 
 
-
-We will use the Freesurfer tools to perform:
+We will use the SPM and FSL tools to perform:
 * image visualization of analysis outputs,
 * intensity inhomogeneity correction, 
-* structural MRI segmentation, and 
-* multimodal image coregistration. 
+* structural MRI segmentation,
+* quantification of volumetric outputs, and 
+* registration to a standard space atlas. 
 
-   
-## Setting up FreeSurfer
-FreeSurfer has been installed on your machine, so the first step is to define an *environment variable* that stores the path (or location) where all FreeSurfer output is to be stored for each of the analyzed subjects, so that Freesurfer knows where to look for the data.  This variable is called `SUBJECTS_DIR` and the structure of the directory is:
- 
-![image](./assets/fs_subjects_dir.png)
+## Opening up an image
+We are going to be working in the `StructuralMRI` subfolder under `data` in your home directory.
+From the previous lesson, you should be able to use `fsleyes` to open up the image **NAME** and have a look around.
+**TODO: Screenshot of FSLEYES with data
+Now open up the other image in the folder: what differences do you notice?
 
-subject1, subject2, etc. are the directories in which the respective subject’s output is stored. We will go over FreeSurfer output later. 
-By default, FreeSurfer will assign a prespecified path to `SUBJECTS_DIR`. You can check this path by typing: 
-```shell
-echo $SUBJECTS_DIR
-```
-If we want to change the `SUBJECTS_DIR` directory, we just need to redefine the `SUBJECTS_DIR` variable. For this course, we have to set our `SUBJECTS_DIR` to the following path: 
-```shell
-SUBJECTS_DIR=~/oasis/subjects
-```
-Remember the ~ is a shortcut to represent your home directory.
+## Running Bias Correction and Tissue Segmentation
+SPM simultaneously performs bias correction tissue segmentation: the assignment of probability that a voxel contains key tissue types and 
+STEPS:
+1. Open up a terminal (screenshots)
+2. Type `spm pet` to launch SPM
+3. From batch editor, select the Segment button (Screenshots)
+4. Select the T1 image (settings bias corrected image, c1 and c2)
 
-Keep in mind that every time you close and open your terminal the `SUBJECTS_DIR` variable will be set back to its default path (`/usr/local/freesurfer/subjects`).
-  
-## Running FreeSurfer recon-all
-Now that we have defined our `SUBJECTS_DIR` directory, we can run the actual FreeSurfer processing pipeline. This command is called [`recon-all`](https://surfer.nmr.mgh.harvard.edu/fswiki/recon-all), as it stands for reconstruction: FreeSurfer reconstructs a two-dimensional cortical surface based on the information contained in a three-dimensional T1 scan, which is the basis for cortical segmentation. The `recon-all` command also provides segmentations of subcortical brain structures, and it produces output files containing the relevant volumetric and morphometric measures derived from both the surface- and volume-based segmentations. While a complete analysis of a T1 scan is is performed with just a single command, `recon-all` typically takes anywhere from 3 to 24 hours to run depending on your computer's hardware. As a result, we have already run this command for you so that you can examine the resulting output. 
- 
-Let’s see how to run `recon-all`. `recon-all` has the following structure:
-```shell
-recon-all -s subject1 -i /path_to_T1_image -all
-```
-* The name of the subject is provided using the `-s` flag. In this example it is set to subject1 but you can set to whatever value you want. 
-* The input T1 scan to analyze is set with the flag `-i` .
-* The flag `-all` tells `recon-all` that you want to perform all the steps of the pipeline. You would usually use this option, except in some occasions where there may be a need to manually edit the outputs from  `recon-all` and then re-run.
+Now look at the original image, bias-corrected image (colormaps), and tissue-segmented image
 
-`recon-all` has several additional options that you may want to investigate to see if they are useful for analyzing your own data. You can find out more about them on your own time by reviewing documentation on the wiki and using the `-help` option in `recon-all`
-```shell
-recon-all -help
-```
-
-As previously mentioned, we have already run `recon-all`, but let’s look at how we used it for some real data that you will inspect. We have selected three participants from the OASIS-3 database, one cognitively normal individual (CN), one patient with Alzheimer’s (AD) and one patient with frontotemporal dementia (FTD). The T1 scans of these subjects are located in:
-
-&emsp; *Path CN scan*: `~/oasis/all_subjects_BIDS/OAS30015_MR_d2004/anat/sub-OAS30015_ses-d2004_T1w.nii.gz`
-
-&emsp; *Path AD scan*: `~/oasis/all_subjects_BIDS/OAS30758_MR_d0007/anat/sub-OAS30758_ses-d0007_T1w.nii.gz`
-
-&emsp; *Path FTD scan*: `~/oasis/all_subjects_BIDS/OAS31171_MR_d0752/anat/sub-OAS31171_ses-d0752_T1w.nii.gz`
-
-Thus, to run `recon-all` for, e.g., the cognitively normal individual we would just need to type 
-
-**AGAIN DON’T RUN THIS COMMAND, recon-all TAKES 3-24 HOURS IN COMPLETING THE ANALYSIS. WE’VE RUN recon-all ALREADY FOR YOU**.
-
-```shell
-recon-all -s CN -i ~/oasis/all_subjects_BIDS/OAS30015_MR_d2004/anat/sub-OAS30015_ses-d2004_T1w.nii.gz -all
-```
-Here, we set the subject’s name to CN (cognitively normal).
-
-### Exercise 1
-*What would be the corresponding recon-all command for the Alzheimer’s (assume that subject name is AD) and frontotemporal dementia (subject name is FTD) subjects? **AGAIN DON’T RUN THESE COMMANDS - THEY HAVE ALREADY BEEN PERFORMED FOR YOU**.*
-
-As we mentioned before, FreeSurfer’s output will be stored in the `SUBJECTS_DIR` directory. Type:
-```shell
-ls $SUBJECTS_DIR
-```
-to see the output folders of the CN, AD, and FTD subjects. 
-
-Let’s see how the output looks like for our CN subject. Type: 
-```shell
-ls $SUBJECTS_DIR/CN 
-```
-The important directories for us are 
-*	`mri/`: here we have all the volumes, including bias corrected scans and volumetric segmentations.
-*	`surf/`: here we can find all the 2-D surface reconstructions, together with morphometric cortical maps such as maps of cortical thickness. 
-*	`label/`: here we have all the annotation files that label the cortical surfaces into different regions of interest. 
-*	`stats/`: here we can find all the necessary files to obtain quantitative metrics such as volumes, cortical thickness, or cortical area measures.  
-  
-## Visualizing data with  Freeview
-After successfully running `recon-all`, we will typically wish to check whether FreeSurfer has actually done a good job. For this, we will use Freeview, which is the visualization tool integrated in FreeSurfer. FreeView is very similar in functionality to the FSLeyes tool that you will use in other sections of this course. To open Freeview we will use a command with the following structure:
- 
-```shell
-freeview -v /volume1 /volume2 /volume… -f /surface1 /surface2 /surface…
-```
-* The flag `-v` is to load volumetric (3D) images; `/volume1 /volume2 /volume…` are the paths of the volumes we want to visualize 
-* The flag `-f` is to load surfaces (2D); `/surface1 /surface2 /surface…` are the paths of the surfaces we want to visualize 
-
-Freeview can load several volumes and surface at one time. 
-
-
-Once we have loaded our image with Freeview, we can navigate across the slices by placing the cursor over the image and use the ↑ ↓ arrow keys; to zoom in/out, use the scroll wheel; you can switch the displayed planes using the buttons highlighted by the red box in the figure below.  
-
-### Exercise 2
-*Use Freeview to visualize the original T1 scans of our CN subject (OAS30015_MR_d2004). Click on a white matter region: the value within the yellow box below is the actual intensity value. Play with the different types of image displays (red box), with intensity saturation (blue box), and with different color maps (brown box).* 
-
-![image](./assets/freeview_screenshot.png)
-
-Additional options for Freeview can be reviewed by typing:   
-```shell
-freeview -help  
-```
-
-Now that we have given you an overview of Freesurfer, the main reconstruction pipeline, and how to visualize data looking at Freeview, let's take a look at some of the key processing steps and outputs from them to ensure Freesurfer has done a good job.
+## Obtaining volume
+One thing that we are often interested in is to obtain the actual volume of grey matter, or a particular brain region. 
+fslstats c1...
 
 ## Bias correction
 Magnetic resonance images often exhibit image intensity non-uniformities that are the result of magnetic field variations rather than anatomical differences. These variations are often seen as a signal gain change that varies slowly spatially. This can result in white matter voxels in one part of the brain having similar intensities to voxels with the same intensity as grey matter in other parts of the brain. However, the intensities in the white matter voxels should be more or less uniform throughout the brain. Any remaining inhomogeneity in the image can significantly influence the results of automatic segmentations, so we need to correct for these effects. 
- 
+
+
+## Coregistration to standard space
+Running FLIRT to get standard space image
+
 Let’s see this effect in our data. Open the original T1 scan of the CN subject with freeview: 
 ```shell
 freeview -v ~/oasis/all_subjects_BIDS/OAS30015_MR_d2004/anat/sub-OAS30015_ses-d2004_T1w.nii.gz
