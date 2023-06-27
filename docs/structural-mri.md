@@ -23,9 +23,17 @@ We will use the SPM and FSL tools to perform:
 
 ## Opening up an image
 We are going to be working in the `StructuralMRI` subfolder under `data` in your home directory.
-From the previous lesson, you should be able to use `fsleyes` to open up the image **NAME** and have a look around.
-**TODO: Screenshot of FSLEYES with data
-Now open up the other image in the folder: what differences do you notice?
+From the previous lesson, you should be able to use `fsleyes` to open up the image and have a look around.
+![Open fsleyes](./assets/aic_smri_fsleyes.png)
+Now we choose the file `sub-OAS_30003_T1w.nii` by going to the File menu and choosing the Add Image command
+**TODO** Clean version of this directory before segment
+![Using the Add Image command](./assets/aic_smri_fsleyes_adddfile.png)
+![Choosing the T1 image](./assets/aic_smri_fsleyes_choosefile.png)
+
+### Exercise 1
+Close fsleyes and then re-open the viewer. This time use the other image in the folder `sub-OAS30217_T1w.nii`. 
+
+*What differences do you notice?*
 
 ## Run Bias Correction and Tissue Segmentation
 SPM simultaneously performs bias correction tissue segmentation: the assignment of probability that a voxel contains key tissue types and 
@@ -45,14 +53,17 @@ STEPS:
     ![Choose the T1 image](./assets/aic_smri_seg_chooset1.png)
    1. Click the Done button
    1. Back in the batch editor, under Data->Save Bias Corrected, please choose "Save Field and Corrected"
+    ![Saving bias field and corrected images](./assets/aic_smri_seg_bcoption.png)
    1. Under the Tissues section, please make sure that the final three tissue entries have both native and warped tissue set to none.
+    ![Only saving input from first three tissues](./assets/aic_smri_seg_native.png)
 1. Click the green run button to start! It should take about 5-10 minutes. You will see a lot of other things happening in other windows. The terminal will say `Done - Segment` when it has finished.
  
 ### Quality check
-The quality check is an important pare of any analysis. We are going to open and check out how the bias correction and then the segmentation has worked. 
-1. Use `fsleyes` again and open up the original image `sub-OAS30003_T1w.nii` using the `Add image` menu item under File.
+The quality check is an important part of any analysis. We are going to visualize the outputs from SPM Segment and make sure that the bias correction and segmentation have worked. 
+1. Use `fsleyes` again and open up the original image `sub-OAS30003_T1w.nii` as you did at the start of the session.
 2. Change the image lookup table to `NIH` (screenshot) and change the image minimum to 40 and the maximum to 600.
-3. Next add the  bias corrected image, which is called  `msub-OAS30003_T1w.niiz.    
+   
+4. Next add the  bias corrected image, which is called  `msub-OAS30003_T1w.nii`. When you add this image, it will overlay on top of the other image and you can no longer see the ooriginal one.     
 
 Now look at the original image, bias-corrected image (colormaps), and tissue-segmented image
 
