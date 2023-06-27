@@ -118,9 +118,12 @@ Run the same command for the WM and CSF images
 MRI scans can be acquired in any orientation. Even when we think we are getting a sagittal or coronal acquisition, the patient may end up in the scanner at a slant. This makes it difficult to identify key anatomical landmarks. We may also want to compare common anatomical structures across a whole sample of subjects. The main solution to this is to use *image registration* to orient our images and align them with a standard anatomical coordinate system. In this case, we will be aligning our data to the Montreal Neurological Institute [MNI152 atlas](https://mcin.ca/research/neuroimaging-methods/atlases/). We are not looking to perfom an exact voxel to voxel match between our image and the atlas. Instead, we just want to align the images such that the orientation and the relative size are aligned.
 
 ### Skull stripping
-Before we can perform the registration, we will use the tissue probability maps to *skull strip* the image. Skull stripping removes the non-brain tissue (scalp, dura, neck, eyes, etc) from the image. First we will use the FSL utility `fslmaths` to create a brain mask by using the tissue probability maps from SPM. Fslmaths is a great swiss-army knife utility to do lots of helpful little image processing bits. ```bash
+Before we can perform the registration, we will use the tissue probability maps to *skull strip* the image. Skull stripping removes the non-brain tissue (scalp, dura, neck, eyes, etc) from the image. First we will use the FSL utility `fslmaths` to create a brain mask by using the tissue probability maps from SPM. Fslmaths is a great swiss-army knife utility to do lots of helpful little image processing bits. 
+
+```bash
 fslmaths c1sub-OAS30003_T1w.nii -add c2sub-OAS30003_T1w.nii -add c3sub-OAS30003_T1w.nii -thr 0.5 -bin sub-OAS30003_T1w_brain_mask.nii
 ```
+
 Let's break this command down a little bit:
 * First, we state the command we want to run `fslmaths`
 * We then specify our input image, the GM map `c1sub-OAS30003_T1w.nii`
