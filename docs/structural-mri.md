@@ -37,13 +37,15 @@ STEPS:
 1. SPM will then create a number of windows. You want to look at the Main Menu Window that has ll of the buttons.
  ![SPM windows](./assets/aic_smri_spm.png)
 1. From main menu, select the Segment button (Screenshots). This will launch a window known as the *batch editor*, where you can adjust settings on the pipeline to be run.
-  ![SPM](./assets/aic_smri_spm_seg_batch.png)
+  ![SPM Batch Segment Editor](./assets/aic_smri_seg_batch.png)
 1. Edit the options for segmentation:
    1. Under Data->Channels->Volume, click on "Specify...".
-   2. In the dialog box that opens up, please navigate to the folder `data` and then `StructuralMRI`. Then select the first image `sub-OAS30003_T1w.nii`. Once you click on it, you will notice the file move down to the bottom of the box which represents the list of selected files.
-   3. Click the Done button
-   4. Back in the batch editor, under Data->Save Bias Corrected, please choose "Save Field and Corrected"
-   5. Under the Tissues section, please make sure that the final three tissue entries have both native and warped tissue set to none.
+    ![Navigating to volumes in batch editor](./assets/aic_smri_seg_volumes.png)
+   1. In the dialog box that opens up, please navigate to the folder `data` and then `StructuralMRI`. Then select the first image `sub-OAS30003_T1w.nii`. Once you click on it, you will notice the file move down to the bottom of the box which represents the list of selected files.
+    ![Choose the T1 image](./assets/aic_smri_seg_chooset1.png)
+   1. Click the Done button
+   1. Back in the batch editor, under Data->Save Bias Corrected, please choose "Save Field and Corrected"
+   1. Under the Tissues section, please make sure that the final three tissue entries have both native and warped tissue set to none.
 1. Click the green run button to start! It should take about 5-10 minutes. You will see a lot of other things happening in other windows. The terminal will say `Done - Segment` when it has finished.
  
 ### Quality check
