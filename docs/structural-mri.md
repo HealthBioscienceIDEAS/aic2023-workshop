@@ -30,11 +30,10 @@ Now open up the other image in the folder: what differences do you notice?
 ## Run Bias Correction and Tissue Segmentation
 SPM simultaneously performs bias correction tissue segmentation: the assignment of probability that a voxel contains key tissue types and 
 STEPS:
-1. Open up a terminal 
+1. Clicking on the Applications in the upper left-hand corner and select the terminal icon
  ![launching a terminal window](./assets/aic_smri_launch_terminal.png)
- **Figure 1** Opening the terminal in the Virtual Machine.
- ![The terminal window](./assets/aic_smri_launch_terminal.png)
- **Figure 2** This will result in a terminal window for which you type commands.    
+1. This will open a terminal window that you will use to type commands
+ ![The terminal window](./assets/aic_smri_terminal_window.png)
 1. Type `spm pet` to launch SPM (screenshot)
 1. From main menu, select the Segment button (Screenshots). This will launch a window known as the *batch editor*, where you can adjust settings on the pipeline to be run.
 1. Edit the options for segmentation:
