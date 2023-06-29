@@ -22,12 +22,16 @@ We will use the SPM and FSL tools to perform:
 * registration to a standard space atlas. 
 
 ## Opening up an image
-We are going to be working in the `StructuralMRI` subfolder under `data` in your home directory.
-From the previous lesson, you should be able to use `fsleyes` to open up the image and have a look around.
+We are going to be working in the `StructuralMRI` subfolder under `data` in your home directory.From the previous lesson, you learned how to view and navigate images.
+
+Clicking on the Applications in the upper left-hand corner and select the terminal icon. This will open a terminal window that you will use to type commands
+ ![launching a terminal window](./assets/aic_smri_launch_terminal.png) 
+ 
+From the terminal window, type `fsleyes` to open up the image and have a look around.
 ![Open fsleyes](./assets/aic_smri_fsleyes.png)
+
 Now we choose the file `sub-OAS_30003_T1w.nii` by going to the File menu and choosing the Add Image command
-**TODO** Clean version of this directory before segment
-![Using the Add Image command](./assets/aic_smri_fsleyes_adddfile.png)
+![Using the Add Image command](./assets/aic_smri_fsleyes_addfile.png)
 ![Choosing the T1 image](./assets/aic_smri_fsleyes_choosefile.png)
 
 ### Exercise 1
@@ -47,8 +51,6 @@ The next step is to reliably identify what type of tissue each voxel contains. W
 SPM performs the *bias correction* and *tissue segmentation* steps simultaneously. Follow the steps below to obtain bias-corrected images and tissue probability maps. 
 
 STEPS:
-1. Clicking on the Applications in the upper left-hand corner and select the terminal icon. This will open a terminal window that you will use to type commands
- ![launching a terminal window](./assets/aic_smri_launch_terminal.png) 
 1. Type `spm pet` to launch SPM (screenshot)
  ![The terminal window](./assets/aic_smri_terminal_window.png)
 1. SPM will then create a number of windows. You want to look at the Main Menu Window that has ll of the buttons.
@@ -87,10 +89,10 @@ Use the eye icon in the overlay list right next to the file `msub-OAS30003_T1w.n
 
 ### Tissue segmentation
 Now that we are happy with the bias correction, lets look at the tissue segmentation.
-1. Use the icon to turn off the bias corrected image. Select the original image and make sure the colormap is back to the first option "Greyscale"
+1. Use the icon to turn off the original image. Select the bias corrected image and make sure the colormap is back to the first option "Greyscale"
  ![Turning off bias corrected image](./assets/aic_smri_fsleyes_orig.png)
 1. Now add the grey matter probability image `c1sub-OAS30003_T1w.nii`. 
-1. Choose the probability map to Red. Change the minimum intensity to 0.2 and the maximum intensity to 0.9. 
+1. Choose the probability map and set the lookup table to Red. Change the minimum intensity to 0.2 and the maximum intensity to 0.9. This will eliminate some noise from very low probability voxels.
 1. Use the opacity slider to make the grey matter probability map transparent.
  ![Adding the grey matter image and turning it red](./assets/aic_smri_fsleyes_gm.png)
 1. Look around the image, zoom in places, and try turning the grey matter probability map off and on. The goal is to make sure the grey matter probability map is not:
@@ -115,7 +117,7 @@ Run the same command for the WM and CSF images
 *What are the three tissue volumes?*
 
 ## Coregistration to standard space
-MRI scans can be acquired in any orientation. Even when we think we are getting a sagittal or coronal acquisition, the patient may end up in the scanner at a slant. This makes it difficult to identify key anatomical landmarks. We may also want to compare common anatomical structures across a whole sample of subjects. The main solution to this is to use *image registration* to orient our images and align them with a standard anatomical coordinate system. In this case, we will be aligning our data to the Montreal Neurological Institute [MNI152 atlas](https://mcin.ca/research/neuroimaging-methods/atlases/). We are not looking to perfom an exact voxel to voxel match between our image and the atlas. Instead, we just want to align the images such that the orientation and the relative size are aligned.
+MRI scans can be acquired in any orientation. Even when we think we are getting a sagittal or coronal acquisition, the patient may end up in the scanner at a slant. This makes it difficult to identify key anatomical landmarks. We may also want to compare common anatomical structures across a whole sample of subjects. The main solution to this is to use *image registration* to orient our images and align them with a standard anatomical coordinate system. In this case, we will be aligning our data to the Montreal Neurological Institute [MNI152 atlas](https://mcin.ca/research/neuroimaging-methods/atlases/). We are not looking to perform an exact voxel to voxel match between our image and the atlas. Instead, we just want to align the images such that the orientation and the relative size are aligned.
 
 ### Skull stripping
 Before we can perform the registration, we will use the tissue probability maps to *skull strip* the image. Skull stripping removes the non-brain tissue (scalp, dura, neck, eyes, etc) from the image. First we will use the FSL utility `fslmaths` to create a brain mask by using the tissue probability maps from SPM. Fslmaths is a great swiss-army knife utility to do lots of helpful little image processing bits. 
@@ -134,12 +136,35 @@ Let's break this command down a little bit:
 * Our final operation is to *binarize* the image. Any values that are not zero are set to one. This creates a mask which says whether the voxel is inside (**1**) or outside (**0**) of the brain.  
 * Finally, we save our results into the new image file `sub-OAS30003_T1w_brain_mask.nii`
 
+Now that we have created a mask, we are going to remove all the information outside of the mask using the following command:
+```bash
+fslmaths msub-OAS30003_T1w.nii -mas sub-OAS30003_T1w_brain_mask.nii.gz msub-OAS30003_T1w_brain.nii
+```
+This command masks our bias corrected image with the brain mask and makes a new file which has the name `msub-OAS30003_T1w_brain.nii`. Take a look at the image in `fsleyes`.
+![Skull stripped MRI](./assets/aic_smri_launch_terminal.png)
+
 We will then use the FSL registration program [FLIRT](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FLIRT) to align our image to the standard space MNI152. Please follow the steps below:
 1. On the terminal window, please type in the following command `Flirt`
 1. This will open a dialog box. We will change the following settings:
-   1. For reference image, please select the image you want to register
-   1. For the mask image, please select the mask we created above
-   1. Click go, in the terminal, you will see the *command line* program that would run what you have set up in the dialog box. If you were to select that command and run it in the terminal it would do the same thing. 
+   1. For reference image, click on the folder icon and choose the image `MNI152_T1_1mm_brain`
+   1. For the input image, please select the mask we created above `msub-OAS30003_T1w_brain.nii`
+   1. For the output image, please type in a new name `msub-OAS30003_T1w_brain_MNI.nii`
+The final command setup should look like the screenshot below.
+![FLIRT window](./assets/aic_smri_flirt.png)
+
+If your window looks like this, then click the **go** button at the bottom, in the terminal, you will see the *command line* program that would run what you have set up in the dialog box. If you were to select that command and run it in the terminal it would do the same thing. 
+
+### Quality check
+Let's open `fsleyes` and open the output from the co-registration `msub-OAS30003_T1w_brain_MNI.nii`.
+![T1 in MNI space](./assets/aic_smri_fsleyes_mnispace.png)
+
+Now click on the Add Standard function. This is where fsleyes keeps all of the standard atlases and templates so that you can quickly access them.
+![Add Standard image](./assets/aic_smri_fsleyes_addstd.png)
+
+Select the `MNI152_T1_1mm_brain` from this list of files.
+![Choose MNI image](./assets/aic_smri_fsleyes_choosemni.png)
+
+We can now check if our image is registered by flicking back and forth between the MNI image and our image. 
 
 ### BONUS Exercise 5
 Let's take a look at our other image `sub-OAS30217_T1w.nii`. Run the same skull stripping and registration as you have done before. Now open up both standard space images in `fsleyes`
