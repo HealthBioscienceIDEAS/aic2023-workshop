@@ -141,7 +141,7 @@ Now that we have created a mask, we are going to remove all the information outs
 fslmaths msub-OAS30003_T1w.nii -mas sub-OAS30003_T1w_brain_mask.nii.gz msub-OAS30003_T1w_brain.nii
 ```
 This command masks our bias corrected image with the brain mask and makes a new file which has the name `msub-OAS30003_T1w_brain.nii`. Take a look at the image in `fsleyes`.
-![Skull stripped MRI](./assets/aic_smri_launch_terminal.png)
+![Skull stripped MRI](./assets/aic_smri_fsleyes_skullstripped.png)
 
 We will then use the FSL registration program [FLIRT](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FLIRT) to align our image to the standard space MNI152. Please follow the steps below:
 1. On the terminal window, please type in the following command `Flirt`
