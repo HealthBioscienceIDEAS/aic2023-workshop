@@ -79,6 +79,7 @@ The quality check is an important part of any analysis. We are going to visualiz
 3. Then change the image minimum to 40 and the maximum to 600. This means that all intensities 40 and below will map to the first color in the lookup table, and all voxels 600 and above will map to the last color. The white matter should be yellow to red.
  ![Change intensity limits](./assets/aic_smri_fsleyes_minmax.png)   
 4. Next add the  bias corrected image, which is called `msub-OAS30003_T1w.nii`. Change the lookup table to NIH as you did in Step 2. Change the minimum to 40 and maximum intensity to 500 similar to what you did in Step 2 and 3. 
+ ![Bias image in comparison](./assets/aic_smri_fsleyes_biasnih.png)   
 
  When you add this image, it will overlay on top of the original image. Think of this new image a completely opaque, so that you no longer see the original one. If you want to see the original one, then you need to either turn it off using the eye icon right by the file, or you need to turn the opacity (slider near the top of the screen which is marked opacity.)
 
