@@ -293,6 +293,27 @@ For more information about the atlases available please refer to the [FSL Wiki](
 
 Quit FSLeyes when you have finished looking at the atlases.
 
+### BONUS EXERCISE: Viewing different imaging modalities
+So far we have seen examples of MRI T1-weighted scans (T1w). In research as well as in clinical setting, we acquire multiple imaging modalities from the same individual to look at different brain characteristics. Even if we acquire all the modalities in the same session, the images may differ in orientation and resolution.
+
+Let's take two imaging modalities from a different participant: `sub-OAS30003_T1w.nii.gz` and `sub-OAS30003_FLAIR.nii.gz`
+- *Do they have the same dimension?*
+- *Do they have the same resolution?*
+
+[Hint: use `fslhd` to answer]
+
+Now let's have a look at them in FSLeyes:
+
+```shell
+fsleyes sub-OAS30003_T1w.nii.gz sub-OAS30003_FLAIR.nii.gz
+```
+Change the intensity range for both images to be between 0 and 1000.
+
+- *Do they have the same orientation?* [Hint: look at the location panel]
+- *Which brain characteristics are more visible in the T1w and which are more visible on FLAIR?*
+
+In the Structural MRI session we will learn how to align (register) the two images together to be able to look at the same point in the brain in both images.
+
 ## Additional material
 For a more extensive tutorial on FSLeyes features, please refer to the [FSL course - FSLeyes practical](https://open.win.ox.ac.uk/pages/fslcourse/practicals/intro1/index.html)
 
