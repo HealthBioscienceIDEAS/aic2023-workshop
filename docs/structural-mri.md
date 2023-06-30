@@ -189,7 +189,7 @@ Extract the volumes from the WM and CSF probability maps for `sub-OAS30003_T1w.n
 
 
 ### BONUS Exercise 2
-The volumes that come out of fslstats assume that each voxel is completely full of GM, even though for some voxels the probability may be very small. That can lead to inaccuracies, so there are a couple of ways we can more accurately measure from tissue probability maps.
+The volumes that come out of `fslstats` assume that each voxel is completely full of GM, even though for some voxels the probability may be very small. That can lead to inaccuracies, so there are a couple of ways we can more accurately measure from tissue probability maps.
 
 Before we start, let's make sure we are in the right working directory by using the `cd` command.
 ```bash
@@ -210,7 +210,7 @@ This will produce three numbers:
 2. The number of voxels greater than zero.
 3. The volume of the voxels greater than zero.
 
-If you multiply (1) by (3), this would be what we call the *probablistic* volume of the GM and it accurately accounts the amount of GM in each voxel.
+If you multiply (1) by (3), this would be what we call the *probabilistic* volume of the GM and it accurately accounts the amount of GM in each voxel.
 
 *How do these volumes compare with the original volume you obtained?*
 
