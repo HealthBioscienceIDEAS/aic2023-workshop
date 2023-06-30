@@ -14,17 +14,32 @@ Any medical image consists of two parts: a **header** and the **image** itself. 
 
 ### Viewing image properties - fslhd and fslinfo
 These tools enable various properties of an image to be viewed.
-Please open a command terminal and type:
+
+Clicking on the Applications in the upper left-hand corner and select the terminal icon. This will open a terminal window that you will use to type commands
+ ![launching a terminal window](./assets/aic_smri_launch_terminal.png) 
+
+From the terminal window type:
 
 ```shell
-cd ~/oasis/intro/OAS30015_MR_d2004/anat
+cd ~/data/ImageDataVisualization
 ls
 ```
+
+This means that we are going to be working in the `ImageDataVisualization` subfolder under `data` in your home directory (`~`).
 The `ls` command gives you a list of the files in this directory.
 
-Type `fslhd sub-OAS30015_ses-d2004_T1w.nii.gz` and `fslhd sub-OAS30015_ses-d2004_T1w_brain_pve_0.nii.gz` and let's look at the most important fields:
+Type 
+```shell
+fslhd sub-OAS30015_T1w.nii.gz
+```
+and
 
-* **Data type** (`data_type`): Note that some images (`sub-OAS30015_ses-d2004_T1w`) are of _integer_ datatype, while others (`sub-OAS30015_ses-d2004_T1w_brain_pve_0`) are of _floating point_ datatype. Integer means that the intensity values can only take on whole numbers - no fractions - raw image data is normally of this type. Floating point means that intensity values can be fractional - the result of applying most statistical processing algorithms to image data results in images of floating point type.
+```shell
+fslhd sub-OAS30015_T1w_brain_pve_0.nii.gz
+```
+and let's look at the most important fields:
+
+* **Data type** (`data_type`): Note that some images (`sub-OAS30015_T1w`) are of _integer_ datatype, while others (`sub-OAS30015_T1w_brain_pve_0`) are of _floating point_ datatype. Integer means that the intensity values can only take on whole numbers - no fractions - raw image data is normally of this type. Floating point means that intensity values can be fractional - the result of applying most statistical processing algorithms to image data results in images of floating point type.
 * **Image dimension** (`dim1`, `dim2`,`dim3`): this is the number of voxels in the image in the x,y,z dimension. This means that we have a cube of imaging data in the file that contains `dim1` columns, `dim2` rows, and `dim3` slices.
 * **Image resolution (Voxel size)** (`pixdim1`,`pixdim2`,`pixdim3`) : this tells us the size that each voxel represents (in mm) in the x,y,z dimension. 
 
@@ -57,7 +72,7 @@ The steps to conduct a neuroimaging study are very similar to any other scientif
 ### Neuroimaging data organization - Brain Imaging Data Structure (BIDS)
 Neuroimaging experiments usually generate multiple images and non-imaging data. This can result in complicated data that can be arranged in many different ways. Despite the structure of a neuroimaging study is fairly standard, so far there is no consensus on how to organize and share data obtained in neuroimaging experiments. The [Brain Imaging Data Structure (BIDS)](https://bids.neuroimaging.io/get_started.html) is a framework for organizing data in a standardized way.
 
-The main specifications regard how to structure data/metadata within a hierarchy of folders and how to name files. The data you will use in this workshop will mostly be organized according to this standard. You can find the details of these specifications in the [BIDS starter kit](https://bids-standard.github.io/bids-starter-kit/index.html).
+The main specifications regard how to structure data/metadata within a hierarchy of folders and how to name files. The data you will use in this workshop will mostly be organized according to this standard. If you are interested, you can find the details of these specifications in the [BIDS starter kit](https://bids-standard.github.io/bids-starter-kit/index.html).
 
 ## Visualizing neuroimaging data - FSLeyes
 
@@ -71,7 +86,7 @@ For a full overview of what FSLeyes can do, take a look at the [FSLeyes user gui
 
 ### Getting started
 
-Assuming you are still in the `~/oasis/intro/OAS30015_MR_d2004/anat` directory,
+Assuming you are still in the `~/data/ImageDataVisualization` directory,
 
 Start FSLeyes by typing in the terminal:
 ```shell
@@ -84,7 +99,7 @@ The `&` means that the program you asked for (`fsleyes`) runs in the background 
 FSLeyes by defaults opens in the _ortho view_ mode. If you add image filenames on the command line (after typing `fsleyes`) it will load them all automatically, and you can also add many options from the command line. FSLeyes assumes that all of the images which you load share a
 single coordinate system, but images do not have to have the same field of view, number of voxels, or timepoints.
   
-In FSLeyes, load in the image `sub-OAS30015_ses-d2004_T1w.nii.gz`, by pressing
+In FSLeyes, load in the image `sub-OAS30015_T1w.nii.gz`, by pressing
 _File > Add from file_ and selecting the image. This image is a structural MRI T1-weighted scan. 
 
 Hold the mouse button down in one of the ortho canvases and move it around - see how various things update as you do so:
@@ -181,7 +196,7 @@ You can &quot;unlink&quot; the cursor position between the two views (it is link
 Close the lightbox view for now (click on the small red circle or X at the very top of the view).
 
 ## Viewing multiple images
-Now load in a second image (`sub-OAS30015_ses-d2004_T1w_brain_pve_0.nii.gz`) using _File &gt; Add from file_.  This image is a tissue segmentation image of the cerebrospinal fluid. In the bottom-left panel is a list of loaded images - the _overlay list_.
+Now load in a second image (`sub-OAS30015_T1w_brain_pve_0.nii.gz`) using _File &gt; Add from file_.  This image is a tissue segmentation image of the cerebrospinal fluid. In the bottom-left panel is a list of loaded images - the _overlay list_.
 
 
 <img src="./assets/overlay_list_oasis.png"
@@ -192,7 +207,7 @@ The overlay list shows the images which are currently loaded into FSLeyes. When 
 selected** image - in FSLeyes, you can only select one image at a time.
 
 You can use the controls on the display toolbar to adjust the display properties of the currently selected image. Select the image you just loaded
-(`sub-OAS30015_ses-d2004_T1w_brain_pve_0.nii.gz`), and use the display toolbar to change its colour map to _Red-yellow_.
+(`sub-OAS30015_T1w_brain_pve_0.nii.gz`), and use the display toolbar to change its colour map to _Red-yellow_.
 
 The overlay list allows you to do the following:
 
@@ -228,7 +243,7 @@ images with different resolutions loaded, the voxel location will be different f
 ## Viewing Atlases
 It is often useful to look at images in standard space. This means that images are aligned (_registered_) to a reference template so that each coordinate corresponds to the same point in the brain in all images. This allows to perform group level analyses.
 
-Let's have a look at one of the most used templates, the MNI152. Unload all the images from `fsleyes` (or open a new instance if you closed it before), press _File > Add standard_ and select the image `MNI152_T1_1mm`. As you can see it looks very similar to the T1w image we looked at earlier. This is basically an _average T1w_.
+Let's have a look at one of the most used templates, the MNI152. Unload all the images from `fsleyes` clicking on the minus (`-`) icon in the Overlay list panel (or open a new instance if you closed it before), press _File > Add standard_ and select the image `MNI152_T1_1mm`. As you can see it looks very similar to the T1w image we looked at earlier. This is basically an _average T1w_.
 
 Because we are in standard space, we can turn on the atlas tools with _Settings &gt; Ortho View 1 &gt; Atlases_. Now as you click around in the image you can see reporting of the probability of being in different brain structures. You might want to resize the different FSLeyes panels to increase the size of the Atlas information space (in general you do this by dragging around the edges of the different FSLeyes panels).
 
@@ -281,9 +296,11 @@ Quit FSLeyes when you have finished looking at the atlases.
 ## Additional material
 For a more extensive tutorial on FSLeyes features, please refer to the [FSL course - FSLeyes practical](https://open.win.ox.ac.uk/pages/fslcourse/practicals/intro1/index.html)
 
+FSLeyes manual: https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/index.html
+
 ## References
 * FSL course material: https://open.win.ox.ac.uk/pages/fslcourse/website/online_materials.html
-* McCarthy, Paul. (2021). FSLeyes (1.2.0). Zenodo. https://doi.org/10.5281/zenodo.5504114 FSLeyes manual: https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/index.html
+* McCarthy, Paul. (2021). FSLeyes (1.2.0). Zenodo. https://doi.org/10.5281/zenodo.5504114 
 * Michael Joseph, Jerrold Jeyachandra, and Erin Dickie (eds): "Data Carpentry: Introduction to MRI Data Analysis." Version 2019.11, November 2019,
 [https://github.com/carpentries-incubator/SDC-BIDS-IntroMRI](https://carpentries-incubator.github.io/SDC-BIDS-IntroMRI/open-mri-datasets/index.html)
 
