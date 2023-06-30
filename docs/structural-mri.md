@@ -53,7 +53,7 @@ SPM performs the *bias correction* and *tissue segmentation* steps simultaneousl
 STEPS:
 1. Type `spm pet` to launch SPM (screenshot)
  ![The terminal window](./assets/aic_smri_terminal_window.png)
-1. SPM will then create a number of windows. You want to look at the Main Menu Window that has ll of the buttons.
+1. SPM will then create a number of windows. You want to look at the Main Menu Window that has all of the buttons.
  ![SPM windows](./assets/aic_smri_spm.png)
 1. From main menu, select the Segment button (Screenshots). This will launch a window known as the *batch editor*, where you can adjust settings on the pipeline to be run.
   ![SPM Batch Segment Editor](./assets/aic_smri_seg_batch.png)
@@ -107,7 +107,12 @@ Now do the same steps with the white matter image `c1sub-OAS30003_T1w.nii` and t
 
 
 ## Obtaining volume
-One thing that we are often interested in is to obtain the actual volume of grey matter, or a particular brain region. There are helpful utilities in FSL to extract the volume from the tissue probability maps. This will give you total grey matter volume:
+One thing that we are often interested in is to obtain the actual volume of grey matter, or a particular brain region. There are helpful utilities in FSL to extract the volume from the tissue probability maps. 
+First we will change our working directory to the Structural MRI folder:
+```bash
+cd ~/data/StructuralMRI
+```
+Then we will run this command to get the total grey matter volume:
 ```bash
 fslstats c1sub-OAS30003_T1w.nii -V
 ```
@@ -121,7 +126,16 @@ Run the same command for the WM and CSF images
 MRI scans can be acquired in any orientation. Even when we think we are getting a sagittal or coronal acquisition, the patient may end up in the scanner at a slant. This makes it difficult to identify key anatomical landmarks. We may also want to compare common anatomical structures across a whole sample of subjects. The main solution to this is to use *image registration* to orient our images and align them with a standard anatomical coordinate system. In this case, we will be aligning our data to the Montreal Neurological Institute [MNI152 atlas](https://mcin.ca/research/neuroimaging-methods/atlases/). We are not looking to perform an exact voxel to voxel match between our image and the atlas. Instead, we just want to align the images such that the orientation and the relative size are aligned.
 
 ### Skull stripping
-Before we can perform the registration, we will use the tissue probability maps to *skull strip* the image. Skull stripping removes the non-brain tissue (scalp, dura, neck, eyes, etc) from the image. First we will use the FSL utility `fslmaths` to create a brain mask by using the tissue probability maps from SPM. Fslmaths is a great swiss-army knife utility to do lots of helpful little image processing bits. 
+Before we can perform the registration, we will use the tissue probability maps to *skull strip* the image. Skull stripping removes the non-brain tissue (scalp, dura, neck, eyes, etc) from the image. Before we run the commands, let's first check what working directory we are in by using the command `pwd`:
+```bash
+pwd
+```
+If the response to this command does not have `data/StructuralMRI` at the end of it, then run the following command:
+```bash
+cd ~/data/StructuralMRI
+```
+
+First we will use the FSL utility `fslmaths` to create a brain mask by using the tissue probability maps from SPM. Fslmaths is a great swiss-army knife utility to do lots of helpful little image processing bits. 
 
 ```bash
 fslmaths c1sub-OAS30003_T1w.nii -add c2sub-OAS30003_T1w.nii -add c3sub-OAS30003_T1w.nii -thr 0.5 -bin sub-OAS30003_T1w_brain_mask.nii
