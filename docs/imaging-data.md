@@ -67,7 +67,7 @@ of these are shown in this introductory practical.
 
 Here we provide a quick introduction to some FSLeyes features that you will be likely to use throughout the workshop, while other more specific features will be introduced at a later point. If you are already familiar with FSLeyes, feel free to skip this part and move on to another section of the workshop.
 
-For a full overview of what FSLeyes can do, take a look at the [FSLeyes user guide](https://users.fmrib.ox.ac.uk/~paulmc/fsleyes/userdoc/latest/).
+For a full overview of what FSLeyes can do, take a look at the [FSLeyes user guide](https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/index.html).
 
 ### Getting started
 
