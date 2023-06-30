@@ -116,11 +116,8 @@ Then we will run this command to get the total grey matter volume:
 ```bash
 fslstats c1sub-OAS30003_T1w.nii -V
 ```
+This will produce two numbers. The first number is the number of voxels in the grey matter. These voxels as discussed earlier have physical dimensions indicating how the volume that each individual voxel represents. So the second value indicates the total volume of the grey matter (usually represented in units of $mm^3$).
 
-### Exercise 4
-Run the same command for the WM and CSF images
-
-*What are the three tissue volumes?*
 
 ## Coregistration to standard space
 MRI scans can be acquired in any orientation. Even when we think we are getting a sagittal or coronal acquisition, the patient may end up in the scanner at a slant. This makes it difficult to identify key anatomical landmarks. We may also want to compare common anatomical structures across a whole sample of subjects. The main solution to this is to use *image registration* to orient our images and align them with a standard anatomical coordinate system. In this case, we will be aligning our data to the Montreal Neurological Institute [MNI152 atlas](https://mcin.ca/research/neuroimaging-methods/atlases/). We are not looking to perform an exact voxel to voxel match between our image and the atlas. Instead, we just want to align the images such that the orientation and the relative size are aligned.
@@ -181,8 +178,48 @@ Select the `MNI152_T1_1mm_brain` from this list of files.
 
 We can now check if our image is registered by flicking back and forth between the MNI image and our image. 
 
-### BONUS Exercise 5
-Let's take a look at our other image `sub-OAS30217_T1w.nii`. Run the same skull stripping and registration as you have done before. Now open up both standard space images in `fsleyes`
+
+## Stretch exercises
+If you have completed all of the above and want to keep working on more structural imaging data, please try the exercises below. 
+
+### BONUS Exercise 1
+Extract the volumes from the WM and CSF probability maps for `sub-OAS30003_T1w.nii`.
+
+*What are the three tissue volumes?*
+
+
+### BONUS Exercise 2
+The volumes that come out of fslstats assume that each voxel is completely full of GM, even though for some voxels the probability may be very small. That can lead to inaccuracies, so there are a couple of ways we can more accurately measure from tissue probability maps.
+
+Before we start, let's make sure we are in the right working directory by using the `cd` command.
+```bash
+cd ~/data/StructuralMRI
+```
+
+The first approach is to only count voxels with a **majority** of GM. So we will threshold by the value of 0.5 before calculating our volume.
+```bash
+fslstats c1sub-OAS30003_T1w.nii -l 0.5 -V
+```
+
+The second approach is to get the mean and volume of the all the non-zero voxels.
+```bash
+fslstats c1sub-OAS30003_T1w.nii -M -V
+```
+This will produce three numbers:
+1. The mean of the non-zero voxels
+2. The number of voxels greater than zero.
+3. The volume of the voxels greater than zero.
+
+If you multiply (1) by (3), this would be what we call the *probablistic* volume of the GM and it accurately accounts the amount of GM in each voxel.
+
+*How do these volumes compare with the original volume you obtained?*
+
+### BONUS Exercise 3
+Let's take a look at our other image `sub-OAS30217_T1w.nii`. 
+Perform the same steps as you did for the first image:
+* Segmentation
+* Skull Stripping
+* Co-registration to standard space Run the same skull stripping and registration as you have done before. Now open up both standard space images in `fsleyes`
 
 *What do you observe about the images?*
 
