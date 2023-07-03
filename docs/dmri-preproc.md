@@ -5,8 +5,7 @@ nav_order: 5
 ---
 
 ## Introduction to diffusion-weighted imaging (DWI)
-TODO: Update the text with new file names and locations.
-The data will be under ~/data.
+TODO: Update the text with new file names and locations. Need to update description of eddy outputs
 
 In this section, you will be learning how to process diffusion-weighted MRI scans and perform basic analyses on white matter microstructure. 
 
@@ -72,14 +71,14 @@ All the steps below will be done on one subject only, but if you wish to loop th
 
 ### 1. Creating a brain mask from the b0 images
 
-We often use the b0 images (only 1 in this data) to create a brain mask that is needed in future steps.
+We often use the b0 images (there is only 1 b0 image in this dataset) to create a brain mask that is needed in future steps.
 First select the b0 image, extract the brain only and binarize it to make a mask.
 
 * Extract the b0 image only with select_dwi_vols or fslroi
    ```shell
    # Usage: select_dwi_vols <data> <bvals> <output> <approx_bval> [other options]
 
-   select_dwi_vols sub-OAS30001_ses-d2430_dwi.nii.gz sub-OAS30001_ses-d2430_dwi.bval sub-OAS30001_ses-d2430_b0.nii.gz -b 0
+   select_dwi_vols sub-OAS30001_dwi.nii.gz sub-OAS30001_dwi.bval sub-OAS30001_b0.nii.gz -b 0
 
    # Another option would be to use: fslroi dwidata nodif 0 1
    ```
@@ -89,12 +88,12 @@ First select the b0 image, extract the brain only and binarize it to make a mask
    # Usage: bet <input> <output> [options] 
    # the -m option will automatically create a binarized mask after brain extraction
 
-   bet sub-OAS30001_ses-d2430_b0.nii.gz sub-OAS30001_ses-d2430_b0_bet -m
+   bet sub-OAS30001_b0.nii.gz sub-OAS30001_b0_bet -m
    ```
 
 * Load the mask you just created to make sure it is adequate!
    ```shell
-   fsleyes sub-OAS30001_ses-d2430_b0_bet_mask.nii.gz
+   fsleyes sub-OAS30001_b0_bet_mask.nii.gz
    ```
 
 ### 2. Correcting for susceptibility-induced distortions
@@ -114,17 +113,17 @@ We need to create 2 files to be able to run eddy:
 Run the following lines to create the index file. Since all images are obtained with the same phase encoding, it will just be a vector with values of 1 of the same length of the bval file.
 ```shell
 # count the number of images using the .bval file
-myVar=($(wc -w sub-OAS30001_ses-d2430_dwi.bval))
+myVar=($(wc -w sub-OAS30001_dwi.bval))
 indx="" 
 for ((i=1; i<=$myVar; i+=1)); do indx="$indx 1"; done 
 echo $indx > index.txt
 ```
 
-The acquisition parameter file is a vector containing the phase encoding and the total read out time, which can all be found in the `.json` file. Do `cat sub-OAS30001_ses-d2430_dwi.json` and see if you can find the following information.
+The acquisition parameter file is a vector containing the phase encoding and the total read out time, which can all be found in the `.json` file. Do `cat sub-OAS30001_dwi.json` and see if you can find the following information.
 * TotalReadoutTime: 0.0451246
 * PhaseEncodingDirection: j- : This corresponds to the AP direction and is coded as -1 for the acquisition parameter file. 
 
-You can also try `cat sub-OAS30001_es-d2430_dwi.json | grep 'Total'` to directly find the entry you need!
+You can also try `cat sub-OAS30001_dwi.json | grep 'Total'` to directly find the entry you need!
 
 The acquisition parameter file first includes the phase encoding, with the first 3 numbers corresponding to the x, y, and z directions. Here we are acquiring along the y direction (being -1), and x and z being 0. The last number is the total read out time.
 
@@ -136,7 +135,7 @@ printf "0 -1 0 0.0451246" > acqparams.txt
 We are ready to run eddy!
 Please refer to <https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy> for all the details
 
-However, eddy takes a long time to run (about 40 minutes either on the VM or a MacBook Pro), so we've run it for a few subjects already. The outputs can be found in `~/oasis/diffusion/processed_sourcedata`. You can copy the directory `participant_ID/eddy/` in the folder of the participant you are currently processing to continue running the next steps. The file that we need is `*_eddy_corrected.nii.gz` .
+However, eddy takes a long time to run (about 40 minutes either on the VM or on a MacBook Pro), so we've run it for a few subjects already. The outputs can be found in `~/data/diffusionMRI/processed_sourcedata`. You can copy the directory `participant_ID/eddy/` in the folder of the participant you are currently processing to continue running the next steps. The file that we need is `*_eddy_corrected.nii.gz` .
 
 As eddy creates a lot of output files, it can be good practice to create a separate directory to store the outputs so we keep things more organized, as done in the `processed_sourcedata` directory.
 
@@ -146,7 +145,7 @@ Eddy also takes a lot of input arguments, as depicted below\
 
 If you want to try to run it on one participant, you can try the following command.
 ```shell
-eddy --imain=sub-OAS30001_ses-d2430_dwi.nii.gz --mask=sub-OAS30001_ses-d2430_b0_bet_mask.nii.gz --acqp=acqparams.txt --index=index.txt --bvecs=sub-OAS30001_ses-d2430_dwi.bvec --bvals=sub-OAS30001_ses-d2430_dwi.bval --out=../eddy/eddy_corrected
+eddy --imain=sub-OAS30001_dwi.nii.gz --mask=sub-OAS30001_b0_bet_mask.nii.gz --acqp=acqparams.txt --index=index.txt --bvecs=sub-OAS30001_dwi.bvec --bvals=sub-OAS30001_dwi.bval --out=../eddy/eddy_corrected
 ```
 Now let's compare the raw DWI scan vs. after eddy correction, can you see differences? You can load the two images with `fsleyes`.
 
@@ -161,7 +160,7 @@ We can now fit the diffusion tensor model to the preprocessed data. This will ge
 As this will also generate many outputs, to keep things organized let's create a directory for storing the outputs.
 
 ```shell
-mkdir sub-OAS30001_ses-d2430/dti
+mkdir sub-OAS30001/dti
 ```
 
 The command is `dtifit`, and uses the eddy-corrected data as input. All the inputs required are detailed in the command usage.
@@ -174,7 +173,7 @@ The command is `dtifit`, and uses the eddy-corrected data as input. All the inpu
 # -r,--bvecs	b vectors file
 # -b,--bvals	b values file
 
-dtifit --data=../eddy/eddy_corrected.nii.gz --mask=sub-OAS30001_ses-d2430_b0_bet_mask.nii.gz --bvecs=sub-OAS30001_ses-d2430_dwi.bvec --bvals=sub-OAS30001_ses-d2430_dwi.bval --out=../dti/sub-OAS30001_ses-d2430_
+dtifit --data=../eddy/eddy_corrected.nii.gz --mask=sub-OAS30001_b0_bet_mask.nii.gz --bvecs=sub-OAS30001_dwi.bvec --bvals=sub-OAS30001_dwi.bval --out=../dti/sub-OAS30001_
 ```
 
 Many files have been created, let's look at the ones most commonly used, i.e. FA, MD and V1.\
@@ -221,13 +220,13 @@ for x in sub-OAS30*; do echo $x; dtifit --data=$x/eddy/${x}_eddy_corrected.nii.g
 
 ```
 
-*Note that all processed data can be found in `~/oasis/diffusion/processed_sourcedata` if you want to access it*
+*Note that all processed data can be found in `~/data/DiffusionMRI/processed_sourcedata` if you want to access it*
 
 ### Do you want to investigate microstructure differences between groups? 
 
 Let's investigate FA differences between 4 Controls and 4 AD subjects using [TBSS](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/TBSS/UserGuide). This involves a few easy steps, which are outline below, but please refer to the original description of TBSS for all details.
 
-It can take some time to run, so we placed all outputs in `~/oasis/diffusion/tbss` if you want to explore the outputs from each step.\
+It can take some time to run, so we placed all outputs in `~/data/DiffusionMRI/tbss` if you want to explore the outputs from each step.\
 
 If you want to try it on your own, you can follow these steps:
 
@@ -268,14 +267,14 @@ We are now ready to do the statistical comparisons!
 We will use the tool [randomise](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise/UserGuide), for which we need to create two text files: design.mat and design.con. **Design.mat** specifies which groups the participants belong to and other covariates of interest. **Design.con** specifies the contrasts we want to perform for our statistical analyses.
 
 You need to make sure of the order of your FA images to create the design matrix files, which is the alphabetical order. In this example, we will compare Controls vs. AD patients. The diagnosis for each participant is as follows:\
-sub-OAS30001_ses-d2430 : Control\
-sub-OAS30003_ses-d2682 : Control\
-sub-OAS30006_ses-d2342 : Control\
-sub-OAS30024_ses-d0084 : AD\
-sub-OAS30025_ses-d2298 : Control\
-sub-OAS30128_ses-d0044 : AD\
-sub-OAS30217_ses-d0077 : AD\
-sub-OAS30262_ses-d0839 : AD
+sub-OAS30001 : Control\
+sub-OAS30003 : Control\
+sub-OAS30006 : Control\
+sub-OAS30024 : AD\
+sub-OAS30025 : Control\
+sub-OAS30128 : AD\
+sub-OAS30217 : AD\
+sub-OAS30262 : AD
 
 We want to perform 2-sample t-test. We can create the files we need easily with:
 ```shell
