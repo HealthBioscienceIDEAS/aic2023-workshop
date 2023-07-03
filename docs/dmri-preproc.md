@@ -8,24 +8,32 @@ nav_order: 5
 TODO: Update the text with new file names and locations.
 The data will be under ~/data.
 
-Now that you know the basics behind the principles of DWI, let's first look at the raw data together!
+In this section, you will be learning how to process diffusion-weighted MRI scans and perform basic analyses on white matter microstructure. 
 
-As in previous sessions, all data can be found in `~/oasis `, and all data specific to this session is organized in `~/oasis/diffusion`.
+After the tutorial, you will be able to perform basic measurements relevant to dementia research from diffusion MRI brain scans. 
 
-First copy the directory containing the raw data organized for this session (`sourcedata`) into your own space, with the following command: 
- ```shell
- mkdir ~/data/diffusion
- cp -r ~/oasis/diffusion/sourcedata ~/data/diffusion
- ```
- 
+We will use the FSL diffusion toolbox to perform:
+* image visualization of raw data and analysis outputs,
+* eddy correction,
+* generation of diffusion tensor metrics brain maps,
+* tract-based spatial statistics,
+* you can also stretch your knowledge and familiarize yourself with loops to run these commands on multiple subjects, all shown at the end of this tutorial
+  
+We are going to be working in the DiffusionMRI subfolder under data in your home directory, `~/data/DiffusionMRI`. 
+
 ## Looking at the raw data
+From the previous lessons, you learned how to view and navigate images, let's first look at the raw data, which can all be found under `~/data/DiffusionMRI/sourcedata`.
+
+To go to this directory using the terminal, use the command `cd` to change directory. 
+Type `cd  ~/data/DiffusionMRI/sourcedata` to go this directory.
+
 Let's inspect what each participant's dwi directory should contain: 
 ```shell
-ls ~/data/diffusion/sourcedata/sub-OAS30001_ses-d2430/dwi
+ls sub-OAS30001/dwi
 ```
 or 
 ```shell
-ls ~/data/diffusion/sourcedata/sub-OAS*/dwi
+ls sub-OAS*/dwi
  ```
 The `*` will match any following text, which here will list the contents of any directory starting with "sub-OAS".
  
@@ -40,10 +48,10 @@ All files are required for processing DWI data except the .json file. The `.json
 Let's look at those files:
 ```shell
 # Change directory to go in one participant's folder
-cd sub-OAS30001_ses-d2430/dwi
+cd sub-OAS30001/dwi
 
 ## Image file
-fsleyes sub-OAS30001_ses-d2430_dwi.nii.gz
+fsleyes sub-OAS30001_dwi.nii.gz
  
 ## Text files
 cat sub-OAS30001_ses-d2430_dwi.bval
