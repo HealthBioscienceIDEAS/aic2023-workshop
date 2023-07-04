@@ -296,6 +296,11 @@ Quit FSLeyes when you have finished looking at the atlases.
 ### BONUS EXERCISE: Viewing different imaging modalities
 So far we have seen examples of MRI T1-weighted scans (T1w). In research as well as in clinical setting, we acquire multiple imaging modalities from the same individual to look at different brain characteristics. Even if we acquire all the modalities in the same session, the images may differ in orientation and resolution.
 
+```shell
+cd ~/data/ImageDataVisualization/ExtraStructuralMRI
+ls
+```
+
 Let's take two imaging modalities from a different participant: `sub-OAS30003_T1w.nii.gz` and `sub-OAS30003_FLAIR.nii.gz`
 - *Do they have the same dimension?*
 - *Do they have the same resolution?*
