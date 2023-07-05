@@ -297,7 +297,7 @@ Quit FSLeyes when you have finished looking at the atlases.
 So far we have seen examples of MRI T1-weighted scans (T1w). In research as well as in clinical setting, we acquire multiple imaging modalities from the same individual to look at different brain characteristics. Even if we acquire all the modalities in the same session, the images may differ in orientation and resolution.
 
 ```shell
-cd ~/data/ImageDataVisualization/ExtraStructuralMRI
+cd ~/data/ExtraStructuralMRI
 ls
 ```
 
@@ -313,6 +313,8 @@ Now let's have a look at them in FSLeyes:
 fsleyes sub-OAS30003_T1w.nii.gz sub-OAS30003_FLAIR.nii.gz
 ```
 Change the intensity range for both images to be between 0 and 1000.
+Show/hide images with the eye button (<img src="./assets/eye_icon.png"
+ alt="eye" class="icon"/>), or by double clicking on the image name in the overlay list.
 
 - *Do they have the same orientation?* [Hint: look at the location panel]
 - *Which brain characteristics are more visible in the T1w and which are more visible on FLAIR?*
