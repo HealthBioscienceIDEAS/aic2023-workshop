@@ -5,22 +5,22 @@ nav_order: 1
 ---
 
 # Alzheimer Imaging Consortium Educational Workshop
-## Getting started With Neuroimaging Analysis
+## Getting Started With Neuroimaging Analysis
 
 ### Details
 
 |  |  |
 | --- | --- |
 | Date | Friday 14th July 2023 |
-| Time | 8-12 AM GMT+2 | 
-| Location | Amsterdam, Netherlands |
+| Time | 8AM - 12PM Central European Summer Time | 
+| Location | Hilton(Orange Rooms 1-2) - Amsterdam,Netherlands |
 | Format | In-person workshop | 
 
 ### Target Audience
-This hands-on workshop can serve as a beginner or refresher course for established investigators, clinicians, and trainees involved in the use of imaging techniques in the study of Alzheimer’s disease, related disorders and normal aging. Participants from any career stage are encouraged to join, including undergraduate students, graduate students, post-doctoral researchers and assistant professors engaged in clinical practice, research or teaching.
+This hands-on workshop can serve as a beginner or refresher course for established investigators, clinicians, and trainees involved in using imaging techniques to study Alzheimer’s disease, related disorders and normal ageing. Participants from any career stage are encouraged to join, including undergraduate students, graduate students, post-doctoral researchers and assistant professors engaged in clinical practice, research or teaching.
 
 ### Requirements
-Registrants will need to bring their own laptop to do the exercises (tablets or smartphones will not be sufficient). They will be provided with this repository and links to the "Basics of Neuroimaging" series of AAIC webinars that are occuring in April 2023. The links to the webinars and the slides are below.
+Registrants must bring their own laptops to do the exercises (tablets or smartphones will not be sufficient). They will be provided with this repository and links to the "Basics of Neuroimaging" series of AAIC webinars that are occurring in April 2023. The links to the webinars and the slides are below.
 
 
 | Webinar Title | Slides |
@@ -36,13 +36,13 @@ At the workshop,we will all be using a standard environment, using a virtual mac
 ### Workshop description
 The workshop will provide practical information and an enhanced understanding on how to work with and analyze medical imaging data from magnetic resonance imaging (MRI) and positron imaging tomography (PET).
 
-The initial portion of the workshop will focus on the understanding of the basic structure of an image, how to traverse images, data extraction, and how voxels relate to world coordinates.
+The initial portion of the workshop will focus on understanding the basic structure of an image, how to traverse images, data extraction, and how voxels relate to world coordinates.
 
 Subsequent lectures will be followed by interactive sessions to demonstrate simple workflows including tissue segmentation, registration, and pre-processing steps of fMRI or DTI. The objective of the workshop is to ensure participants gain an in-depth appreciation of commonly used interpretive clinical and or research applications for each methodology. 
 
 
 ### Agenda
-The workshop will consist of hands-on interactive sessions. The first session will focus on understanding of the basic structure of imaging data, how to traverse images, data extraction, and how voxels relate to world coordinates. We will then go through the basic processing steps involving structural MRI data, demonstrating simple workflows including tissue segmentation, and registration. 
+The workshop will consist of hands-on interactive sessions. The first session will focus on understanding the basic structure of imaging data, how to traverse images, data extraction, and how voxels relate to world coordinates. We will then go through the basic processing steps involving structural MRI data, demonstrating simple workflows including tissue segmentation, and registration. 
 
 The second half will consist of two independent working sessions, where facilitators will present interactive tutorials around different forms of neuroimaging analysis (structural MRI, fMRI, DTI or PET data), and the participants will then work on the tutorials of their choice, with assistance from the facilitators. The objective of the workshop is to ensure participants gain an understanding of how to start processing and analyzing various imaging modalities used in dementia research. 
 
@@ -54,7 +54,7 @@ The second half will consist of two independent working sessions, where facilita
 | 8:10-8:40 AM |  [Image data: Basic Structure and Function](./imaging-data.md) | Ludovica Griffanti | 
 | 8:40-9:10 AM| [Structural MRI](./structural-mri.md) | David Cash | 
 | 9:10-9:20 AM | Break | |
-| 9:20-9:50 AM | Introduction to Advanced Imaging Analysis Sections (PET,DT,fMRI) | Tobey Betthauser, Alexa Pichet Binette, Luigi Lorenzini |
+| 9:20-9:50 AM | Introduction to Advanced Imaging Analysis Sections (PET, dMRI,fMRI) | Tobey Betthauser, Alexa Pichet Binette, Luigi Lorenzini |
 | 9:50-10:40 AM | Independent working session 1: [dMRI](./dmri-preproc.md), [fMRI](./fmri-preproc.md) or [PET](./pet.md)  | Facilitated by all organizers |
 | 10:40-10:50 AM | Break | |
 | 10:50-11:40 AM | Independent working session 2: [dMRI](./dmri-preproc.md), [fMRI](./fmri-preproc.md) or [PET](./pet.md)   | Facilitated by all organizers |
@@ -66,7 +66,7 @@ Lessons and information that are helpful, but not part of the workshop can be fo
 * [Getting started with the command line](./extras/command-line.md): Many neuroimaging software packages do not use a graphical interface but require you to be comfortable typing in commands into the computer. This section gives an overview of some basic commands and how to traverse a Linux filesystem.
 
 ### Organizing Committee
-The following committee members have been developing and testing the content, and will be on-hand to lead the sessions and assist individuals. 
+The following committee members have been developing and testing the content and will be on-hand to lead the sessions and assist individuals. 
 
 | Name | Organization |
 | --- | --- |
