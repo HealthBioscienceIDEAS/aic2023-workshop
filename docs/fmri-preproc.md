@@ -17,16 +17,16 @@ To date, a large amount of pre-processing software packages are available and ca
 
 In this tutorial we are going to use data from one participant of the OASIS study. 
 Data can be found in the folder `oasis/fMRI_tutorial_orig`
-First, copy this folder to your own directory in `data` so that you can play with it up as much as you want! If you think you have done things wrong an want to start over, you can run this command again.
+First, let's go into the directory where the functional data are!
 
 ```shell
-cp -rf oasis/fMRI_tutorial_orig  data/fMRI_tutorial 
+cd   data/FunctionalMRI 
 ```
 
 Now go into the subject folder and list the content to have an idea of what data we are going to use. 
 
 ```shell
-cd data/fMRI_tutorial/OAS30015_MR_d2004
+cd OAS30015_MR_d2004
 
 ls 
 ```
@@ -234,5 +234,11 @@ with the `-f` option you can specify the components number that you want to clea
 You should now be able to fully process one fMRI scan yourself! As you know, we usually work with a bunch of data and want to automatize the pre-processing for all the scans, so that we can run it in one go. 
 
 Also following the other sections of this course, try to put all this commands in a *for* loop and use variables to run commands on your files. 
+
+If you want to discover some type of analysis that you can do on the processed data, check out some of these websites: 
+- [FSLnets](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLNets) for network analysis of fMRI scans
+- [Melodic ICA](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/MELODIC) and [Dual regression](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/DualRegression) for resting-state network connecitivity
+- Graph Analysis of connectivity metrics with [Brain COnnectivity Toolbox](https://sites.google.com/site/bctnet/)
+
 
 Ciao!
