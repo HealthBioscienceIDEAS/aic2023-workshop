@@ -243,7 +243,7 @@ Please follow the steps below:
    1. For the input image, click on the folder icon and choose the image `sub-OAS30003_FLAIR_brain.nii.gz`
    1. For the output image, please type in a new name `sub-OAS30003_FLAIR_to_T1w.nii.gz`
 
-The final command setup should look like the screenshot below.
+The final command setup should look like the screenshot below:
 ![FLIRT window](./assets/aic_smri_flirt_T1FLAIR.png)
 
 If your window looks like this, then click the **go** button at the bottom, in the terminal, you will see the *command line* program that would run what you have set up in the dialog box. If you were to select that command and run it in the terminal it would do the same thing. 
