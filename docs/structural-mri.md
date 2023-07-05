@@ -223,5 +223,44 @@ Perform the same steps as you did for the first image:
 
 *What do you observe about the images?*
 
+### BONUS Exercise 4
+Let's now try to co-register two imaging modalities from one participant (*within-subject registration*)
+
+```shell
+cd ~/data/ExtraStructuralMRI
+ls
+```
+At the end of the previous session on data visualization, you looked at a T1-weighted scan and a FLAIR scan from the same participant (`sub-OAS30003_T1w.nii.gz` and `sub-OAS30003_FLAIR.nii.gz`, load them again in FSLeyes if you need a refresh). As you will have noticed, they have different dimensions, resolution and orientation, so if we want to look at the same point in the brain in both images we need to align them.
+
+First, we need to choose which image we want to keep unchanged (*reference*) and which one we want to align to the reference (*input*). Let's assume we want to register the FLAIR image to the T1. We have already prepared a skull-stripped version of the images for you so they are ready to be aligned with [FLIRT](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FLIRT).
+
+The way to do this is very similar to what you did before to co-register a T1 to standard space.
+Please follow the steps below:
+1. On the terminal window, type `Flirt`
+1. This will open the dialog box you used before. The new settings are:
+   1. For reference image, delete the text in the box and type `~/data/ExtraStructuralMRI`, then click on the folder icon and choose the image `sub-OAS30003_T1w_brain.nii.gz`
+   1. Change the Model/DOF (input to ref) to `Rigid Body (6 parameter model)`
+   1. For the input image, click on the folder icon and choose the image `sub-OAS30003_FLAIR_brain.nii.gz`
+   1. For the output image, please type in a new name `sub-OAS30003_FLAIR_to_T1w.nii.gz`
+
+The final command setup should look like the screenshot below.
+![FLIRT window](./assets/aic_smri_flirt_T1FLAIR.png)
+
+If your window looks like this, then click the **go** button at the bottom, in the terminal, you will see the *command line* program that would run what you have set up in the dialog box. If you were to select that command and run it in the terminal it would do the same thing. 
+
+Once done, open the result in FSLeyes:
+
+```shell
+fsleyes sub-OAS30003_T1w_brain.nii.gz sub-OAS30003_FLAIR_to_T1w.nii.gz &
+```
+We can now check if our image is registered by flicking back and forth between the T1 image and the FLAIR registered image.
+
+*Can you think of why the registered FLAIR image appears blurred in the sagittal and coronal plane?*
+
+Now try to do the opposite: co-register the T1 to the FLAIR.
+
+*What differences do you notice with respect to the previous case (FLAIR co-registered to T1)?*
+*Can you think of different cases where you would want to use T1 or FLAIR as your reference?*
+
 ## Next Steps
 You have completed the structural MRI section. Now you can explore different imaging modalities or do some additional work on structural data!
