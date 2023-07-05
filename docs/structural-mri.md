@@ -260,6 +260,7 @@ We can now check if our image is registered by flicking back and forth between t
 Now try to do the opposite: co-register the T1 to the FLAIR.
 
 *What differences do you notice with respect to the previous case (FLAIR co-registered to T1)?*
+
 *Can you think of different cases where you would want to use T1 or FLAIR as your reference?*
 
 ## Next Steps
