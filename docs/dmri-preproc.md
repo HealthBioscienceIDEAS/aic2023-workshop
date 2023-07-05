@@ -133,9 +133,10 @@ printf "0 -1 0 0.0451246" > acqparams.txt
 We are ready to run eddy!
 Please refer to <https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy> for all the details
 
-However, eddy takes a long time to run (about 40 minutes either on the VM or on a MacBook Pro), so we've run it for a few subjects already. The outputs can be found in `~/data/diffusionMRI/processed_sourcedata`. You can copy the directory `participant_ID/eddy/` in the folder of the participant you are currently processing to continue running the next steps. The file that we need is `*_eddy_corrected.nii.gz` .
+However, eddy takes a long time to run (about 40 minutes either on the VM or on a MacBook Pro), so we've run it for a few subjects already. The outputs can be found in `~/data/diffusionMRI/processed_sourcedata`. 
 
-As eddy creates a lot of output files, it can be good practice to create a separate directory to store the outputs so we keep things more organized, as done in the `processed_sourcedata` directory. For example, if you type `ls `~/data/diffusionMRI/processed_sourcedata/sub-OAS30001/eddy/` you will see all the eddy outputs for this given participant.
+As eddy creates a lot of output files, it can be good practice to create a separate directory to store the outputs so we keep things more organized, as done in the `processed_sourcedata` directory. 
+For example, if you type `ls `~/data/diffusionMRI/processed_sourcedata/sub-OAS30001/eddy/` you will see all the eddy outputs for this given participant.
 
 Eddy also takes a lot of input arguments, as depicted below\
 <img width="570" alt="eddy" src="https://user-images.githubusercontent.com/19730876/177518376-64bceb1e-d1ee-4a29-b694-7f0aa8095019.png">\
@@ -146,11 +147,13 @@ If you want to try to run it on one participant, you can try the following comma
 eddy --imain=sub-OAS30001_dwi.nii.gz --mask=sub-OAS30001_b0_bet_mask.nii.gz --acqp=acqparams.txt --index=index.txt --bvecs=sub-OAS30001_dwi.bvec --bvals=sub-OAS30001_dwi.bval --out=../eddy/eddy_corrected
 ```
 To be able to run the next step, we will copy the eddy-corrected DWI scan for one subject into our working directory. 
-Make sure you are in this directory: `~/data/diffusionMRI/sourcedata/sub-OAS30001/dwi` (you can use the command `pwd` to print your working directory), and then type this command: 
-`cp ../../../processed_sourcedata/sub-OAS30001/eddy/sub-OAS30001_eddy_corrected.nii.gz .`
+Make sure you are in this directory: `~/data/diffusionMRI/sourcedata/sub-OAS30001/dwi` (you can use the command `pwd` to print your working directory and know where you are), and then type this command: 
+```shell
+cp ../../../processed_sourcedata/sub-OAS30001/eddy/sub-OAS30001_eddy_corrected.nii.gz .
+```
 
 Now let's compare the raw DWI scan vs. after eddy correction, can you see differences? 
-You can load the two images (`sub-OAS30001_dwi.nii.gz` and `sub-OAS30001_eddy_corrected.nii.gz`) with `fsleyes`.
+You can load the two images (sub-OAS30001_dwi.nii.gz and sub-OAS30001_eddy_corrected.nii.gz) with `fsleyes`.
 
 ** **It’s always important to inspect images after preprocessing steps! Many software (including FSL) have automated QC frameworks available to help go through all the outputs. You can find more information on eddyQC from FSL here if you want to try it: <https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddyqc>**
 
