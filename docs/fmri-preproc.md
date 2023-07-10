@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Introduction to Resting-state Functional MRI - A Short Preprocessing Tutorial 
+title: Functional Magnetic Resonance Imaging (fMRI)
 nav_order: 6
 ---
-
+# Introduction to Resting-state Functional MRI:  A Short Preprocessing Tutorial 
 Functional Magnetic Resonance Imaging (fMRI) is a technique that captures a "movie" of brain activation over a certain period of time. fMRI sequences are *time series* (4D acquisitions) of 3D brain volumes. fMRI measures the blood-oxygen-level-dependent (**BOLD**) signal, an indirect measure of regional brain metabolism. 
 
 Raw resting-state functional MRI images are prone to several artifacts and variability sources. For this reason, before performing our statistical analysis, we need to apply a series of procedures that aim at removing the sources of signal that we are not interested in, to clean the ones we want to study. All these procedures together are called *pre-processing*.
