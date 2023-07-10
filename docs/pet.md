@@ -24,13 +24,13 @@ already applied during the reconstruction. Notably, no smoothing was applied dur
 
 ### Gaining familiarity with 4D PET data
 1. Prepare working directory
-   1. Open a new terminal window and navigate to the directory with the unprocessed PET NIFTI images and data `/home/as2-streaming-user/data/PET_Imaging`.
-   1. Use ls to view the contents of this directory
+   1. Open a new terminal window and navigate to the directory with the unprocessed PET NIfTI images and data `/home/as2-streaming-user/data/PET_Imaging`.
+   1. Use `ls` to view the contents of this directory
    1. Copy the data in the `UnprocessedData` directory to your local directory using the cp command.
-    ```bash
-    cp -r UnprocessedData /home/as2-streaming-user/MyFiles/PET_Tutorial/)
-    ```
-   1. Use cd to change your working directory to the location you just copied the data.
+       ```bash
+       cp -r UnprocessedData /home/as2-streaming-user/MyFiles/PET_Tutorial/)
+       ```
+   1. Use `cd` to change your working directory to the location you just copied the data.
 2. View PET metadata
    1. View the information in the .json file for MK-6240 and PiB images by opening the .json files for the MK-6240 and PiB images using `gedit` (e.g., use the command `gedit
 sub001_pib.json` in the terminal). Hint: you may want to open multiple terminal windows to view the .json file contents side-by-side.
@@ -90,7 +90,7 @@ option.
    1. For each variable in the GUI, you will need to specify values using the Specify button.
 Use the values specified below for each variable listed.
       1. `Input Images` – here we want to specify the input images that we are going to
-use to perform the image calculation. The order the images are specified will
+use to perform the image calculation. The order that the images are specified will
 determine the order they are referred to in the expression field below (e.g., the
 first image is i1, the second image is i2, etc.,) However, SPM will only load one
 frame at a time for 4D data, so each frame needs to be specified individually
@@ -111,10 +111,9 @@ blank, SPM will output the file in the present working directory (i.e., the
 directory that SPM was launched from in the command line)
       1. Expression – because the frames are all 5 minutes long at this part of the
 sequence, we can simply take the average to sum the last 20 minutes of counts.
-Enter the expression “(i1 + i2 + i3 +i4)/4” *note that taking the average of these
-frames is equivalent to summing all of the detected counts across the frames
-and dividing by the total amount of time that has passed during those frames
-(i.e., 20 min).
+Enter the expression `(i1 + i2 + i3 +i4)/4`
+         * note that taking the average of these frames is equivalent to summing all of the detected counts across the frames
+and dividing by the total amount of time that has passed during those frames (i.e., 20 min).
       1. Data Matrix, Masking, Interpolation can all use default values
       1. Data Type – specify FLOAT32
    1. Verify ImCalc inputs and then run the batch by pressing the green play button at the top
@@ -127,6 +126,7 @@ plane just to the left or right of mid-sagittal. You can similarly see differenc
 between much of the cortex and the cerebellar GM, a common reference region used
 for amyloid PET as it typically has negligible specific binding in the cerebellum.
      **Do you think this person is amyloid positive or negative?**
+      
    1. Repeat the above steps to generate the SUM image for the early frame data. Make sure
 to remove the previous volumes before adding the new volume in the Input Images. You
 will need to use the first seven frames corresponding to the first 20 min of data. Note
@@ -134,8 +134,10 @@ that the frames are not all the same duration and a straight average is no longe
 equivalent to summing all of the counts and dividing by the total time. How can we use a
 weighted average to account for the differences in frame durations between the first five
 and last two frames of the first 20 minutes?
-      1. (i1*2 + i2*2 + i3*2 + i4*2 +i5*2 + i6*5 + i7*5) / 20
-      1. Name this file “sub001_pib_SUM0-20min.nii”
+       ```matlab
+       (i1*2 + i2*2 + i3*2 + i4*2 +i5*2 + i6*5 + i7*5) / 20
+       ```
+      1. Name this file `sub001_pib_SUM0-20min.nii`
    1. Open the 0-20 min SUM image in FSLeyes and compare to the 50-70 min SUM image.
 Note the differences in GM/WM contrast between the images and the differences in
 noise properties. You will likely have to change the max intensity settings in both images
@@ -187,17 +189,17 @@ the Source Image and Other Image! As such, we will first create a safe copy of o
 images before running the Coregistration module).
    1. Create copies of the smoothed late-frame SUM image and the 4D pib image.
       1. In the terminal, create a new directory called “safe” in your working directory.
-       ```bash
-       mkdir safe
-       ```
+          ```bash
+          mkdir safe
+          ```
       1. Copy the `ssub001_pib_SUM50-70min.nii` and `sub001_pib.nii` images to the safe
 directory using the cp command in the terminal.
-       ```bash
-       cp ssub001_pib_SUM50-70min.nii safe/ ssub001_pib_SUM50-70min.nii
-       ```
+          ```bash
+          cp ssub001_pib_SUM50-70min.nii safe/ ssub001_pib_SUM50-70min.nii
+          ```
    1. Open the Coregistration module by selecting Coregister (Est & Res) from the Spatial pre-
 processing drop down. This function will estimate the parameters needed to align the
-source image to the reference image, write those transformations to the nifti headers
+source image to the reference image, write those transformations to the NIfTI headers
 for those files and will create new images with the image matrices resliced to align voxel-
 to-voxel with the reference image.
       1. Select sub001_t1mri.nii for the reference image.
@@ -221,7 +223,7 @@ the T1-weighted MRI. Notice the PET image now aligns with the MRI. Also note
 the elevated binding in the precuneus, cingulate cortex, and frontal, parietal and
 temporal cortices.
       1. Also observe the registration accuracy by looking at features common to (i.e.,
-mutual information) both T1-wieghted MRI and PiB PET. For example, elevated
+mutual information) both T1-weighted MRI and PiB PET. For example, elevated
 non-specific PiB binding can be observed in the cerebellar peduncles (white
 matter) and a lack of tracer uptake is observed in the CSF filled spaces like the
 lateral ventricles which are also low intensity on the T1-w MRI.
@@ -269,14 +271,14 @@ will divide the entire SUM pet image by the mean of the SUM PET image in all vox
 where the cerebellum mask =1. We’ll do this in two steps using FSL.
    1. In the command line, extract the mean activity concentration in the cerebellum mask
 using fslstats
-    ```bash
-    fslstats rssub001_pib_SUM50-70min.nii -k rsub001_cblm_mask.nii -M
-    ```
+       ```bash
+       fslstats rssub001_pib_SUM50-70min.nii -k rsub001_cblm_mask.nii -M
+       ```
    1. Create the SUVR image by dividing the SUM 50-70min image by the mean activity
 concentration output by fslstats
-    ```bash
-    fslmaths rssub001_pib_SUM50-70min.nii -div {ROI mean} rssub001_pib_SUVR50-70min.nii
-    ```
+       ```bash
+       fslmaths rssub001_pib_SUM50-70min.nii -div {ROI mean} rssub001_pib_SUVR50-70min.nii
+       ```
 10. View the SUVR image overlayed on the T1-w MRI
     1. Open the T1-weighted MRI (if not already opened) and the newly created pib SUVR
 image `rssub001_pib_SUVR50-70min.nii` in FSLeyes.
@@ -285,6 +287,7 @@ intensity window to 0 and 3, and set the opacity to ~50%.
     1. Notice the values within the image have been rescaled and should be roughly between 0
 and 3 SUVR. For interpretation, values ~>1 (plus some noise) in the gray matter indicate
 specific tracer binding to beta-amyloid plaques.
+
       ** Knowing this, which regions do you suspect have amyloid plaques? Which regions have the highest density of amyloid plaques?
 
 ### Test your knowledge
@@ -292,7 +295,7 @@ You have created a SUVR image for PiB, which used a dynamic acquisition wherein 
 the same time as tracer injection. Now see if you can repeat the relevant steps above to create a SUVR
 image for the MK-6240 scan. You’ll need to look at the .json file and the timing and framing information
 to determine which frames to SUM to generate the SUVR image. The most commonly used MK-6240
-SUVR windows are 70-90 min or 90-110 min post injection. For most tau tracers, the inferior cerebellum
+SUVR windows are 70-90 min or 90-110 min post-injection. For most tau tracers, the inferior cerebellum
 is a valid reference region. If you run out of time and would like to view an MK-6240 SUVR image, you
 can view the images in <path>, which have been pre-processed. In addition, we have also pre-processed
 the PiB image using a different image pipeline that outputs DVR instead of SUVR. Compare the DVR and
@@ -343,7 +346,7 @@ by reducing voxel-level noise.
 4. SUM PET frames across the 4D acquisition
    1. For interframe realignment, we typically create an average image of the entire 4D time
 series to use as a reference image to align each frame. Because the PiB framing
-sequence has difference frame durations, we cannot simply average the frames as we
+sequence has different frame durations, we cannot simply average the frames as we
 would in fMRI, but instead need to create a SUM image of the entire 70-minute
 acquisition using a weighted average.
    1. Open the ImCalc module in SPM.
@@ -352,9 +355,9 @@ sure to maintain the frame order on the file input.
    1. Name the output file `ssub001_pib_SUM0-70min.nii`
    1. For the expression, specify an equation for a frame duration-weighted average of all
 frames. Recall that the frame durations are stored in the .json file.
-     ```matlab
-     (i1*2 +i3*2 +i4*2 +i5*2 +i6*5 +i7*5 +i8*5 +i9*5 +i10*5 +i11*5 +i12*5 +i13*5 +i14*5 +i15*5 +i16*5 +i17*5)/70
-     ```
+        ```matlab
+        (i1*2 +i3*2 +i4*2 +i5*2 +i6*5 +i7*5 +i8*5 +i9*5 +i10*5 +i11*5 +i12*5 +i13*5 +i14*5 +i15*5 +i16*5 +i17*5)/70
+        ```
    1. Use FLOAT32 for the Data Type
    1. Run the module using the green play arrow.
    1. Close the SPM ImCalc module.
@@ -423,7 +426,7 @@ to T1-weighted MRI
 graphical analysis, $t^*$=35 min, $k_2’$=0.149 $min^{-1}$, cerebellum mask reference region)
   * See the file descriptions earlier in the appendix for remaining descriptions of images in this directory
 
-PiB DVR Pipeline
+## PiB DVR Pipeline
 Smooth 4D data (3 mm) -> SUM 0-70 min for realignment reference -> Interframe Realignment -> HYPR
 Denoising -> SUM 0-20 min for coregistration source image -> Coregister to MRI -> Extract cerebellum
 GM reference region time-activity curve -> Generate parametric DVR image
