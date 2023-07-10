@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Introduction to Resting-state Functional MRI: A Short Pre-Processing Tutorial 
+title: Introduction to Resting-state Functional MRI - A Short Preprocessing Tutorial 
 nav_order: 6
 ---
 
