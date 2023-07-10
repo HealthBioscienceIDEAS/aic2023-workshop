@@ -24,27 +24,27 @@ already applied during the reconstruction. Notably, no smoothing was applied dur
 
 ### Gaining familiarity with 4D PET data
 1. Prepare working directory
-   a. Open a new terminal window and navigate to the directory with the unprocessed PET NIFTI images and data `/home/as2-streaming-user/data/PET_Imaging`.
-   b. Use ls to view the contents of this directory
-   c. Copy the data in the `UnprocessedData` directory to your local directory using the cp command.
+   1. Open a new terminal window and navigate to the directory with the unprocessed PET NIFTI images and data `/home/as2-streaming-user/data/PET_Imaging`.
+   1. Use ls to view the contents of this directory
+   1. Copy the data in the `UnprocessedData` directory to your local directory using the cp command.
    ```bash
    cp -r UnprocessedData /home/as2-streaming-user/MyFiles/PET_Tutorial/)
    ```
-   d. Use cd to change your working directory to the location you just copied the data.
+   1. Use cd to change your working directory to the location you just copied the data.
 2. View PET metadata
-   a. View the information in the .json file for MK-6240 and PiB images by opening the .json files for the MK-6240 and PiB images using `gedit` (e.g., use the command `gedit
+   1. View the information in the .json file for MK-6240 and PiB images by opening the .json files for the MK-6240 and PiB images using `gedit` (e.g., use the command `gedit
 sub001_pib.json` in the terminal). Hint: you may want to open multiple terminal windows to view the .json file contents side-by-side.
-   b. Note that the Time section differs with regard to the scant start and injection start times.
+   1. Note that the Time section differs with regard to the scant start and injection start times.
      Namely, the MK-6240 scan starts 70 minutes after tracer injection whereas the PiB
 image starts at the same time as the scan start. The latter is often referred to as a “full
 dynamic” acquisition and enables us to calculate more accurate measurements like
 distribution volume ratio (DVR) and often additional parameters from the time-series
 data (e.g., R1 relative perfusion). If we had arterial data available, we could also use the
 full dynamic scan to perform kinetic modeling.
-   c. Also note the framing sequences differs between the two tracers. MK-6240 is using
+   1. Also note the framing sequences differs between the two tracers. MK-6240 is using
 consecutive 5-minute frames whereas PiB starts with 2-minute frames for the first 10
 minutes and then 5-minute frames thereafter.
-   d. For both images, the decay correction factors correspond to the scan start time
+   1. For both images, the decay correction factors correspond to the scan start time
 (indicated by “START” in the DecayCorrected field). This may or may not have
 consequences for how we quantify the image. For example, if we wanted to calculate
 the standard uptake value (SUV = C(t) / Injected Dose x body mass) we would need to
