@@ -1,10 +1,9 @@
 ---
 layout: default
-title: Pre-processing fMRI data
+title: Functional Magnetic Resonance Imaging (fMRI)
 nav_order: 6
 ---
-
-# Introduction to Resting-state Functional MRI: A Short Pre-Processing Tutorial 
+# Introduction to Resting-state Functional MRI:  A Short Preprocessing Tutorial 
 Functional Magnetic Resonance Imaging (fMRI) is a technique that captures a "movie" of brain activation over a certain period of time. fMRI sequences are *time series* (4D acquisitions) of 3D brain volumes. fMRI measures the blood-oxygen-level-dependent (**BOLD**) signal, an indirect measure of regional brain metabolism. 
 
 Raw resting-state functional MRI images are prone to several artifacts and variability sources. For this reason, before performing our statistical analysis, we need to apply a series of procedures that aim at removing the sources of signal that we are not interested in, to clean the ones we want to study. All these procedures together are called *pre-processing*.
@@ -15,18 +14,18 @@ To date, a large amount of pre-processing software packages are available and ca
 
 ## Data 
 
-In this tutorial we are going to use data from one participant of the OASIS study. 
+In this tutorial, we are going to use data from one participant of the OASIS study. 
 Data can be found in the folder `oasis/fMRI_tutorial_orig`
-First, copy this folder to your own directory in `data` so that you can play with it up as much as you want! If you think you have done things wrong an want to start over, you can run this command again.
+First, let's go into the directory where the functional data are!
 
 ```shell
-cp -rf oasis/fMRI_tutorial_orig  data/fMRI_tutorial 
+cd   data/FunctionalMRI 
 ```
 
 Now go into the subject folder and list the content to have an idea of what data we are going to use. 
 
 ```shell
-cd data/fMRI_tutorial/OAS30015_MR_d2004
+cd OAS30015_MR
 
 ls 
 ```
@@ -53,17 +52,17 @@ Given the low spatial resolution and SNR of fMRI images, some registration steps
 
 - Brain extraction with BET
    ```shell
-   bet sub-OAS30015_ses-d2004_T1w.nii.gz sub-OAS30015_ses-d2004_T1w_bet -f 0.4
+   bet sub-OAS30015_T1w.nii.gz sub-OAS30015_T1w_bet -f 0.4
    ```
 - Tissue Segmentation with FAST 
    ```shell
-   fast -n 3 -b -o sub-OAS30015_ses-d2004_T1w_bet_FAST sub-OAS30015_ses-d2004_T1w_bet.nii.gz
+   fast -n 3 -b -o sub-OAS30015_T1w_bet_FAST sub-OAS30015_T1w_bet.nii.gz
    ```
 - Linear and Non linear T1w to MNI Standard Space Mapping
    ```shell
-   flirt -in sub-OAS30015_ses-d2004_T1w_bet.nii.gz  -ref /usr/local/fsl/data/standard/MNI152_T1_2mm_brain -out highres2standard -omat highres2standard.mat -cost corratio -dof 12 -searchrx -90 90 -searchry -90 90 -searchrz -90 90 -interp trilinear
+   flirt -in sub-OAS30015_T1w_bet.nii.gz  -ref /usr/local/fsl/data/standard/MNI152_T1_2mm_brain -out highres2standard -omat highres2standard.mat -cost corratio -dof 12 -searchrx -90 90 -searchry -90 90 -searchrz -90 90 -interp trilinear
 
-   fnirt --iout=highres2standard_head --in=sub-OAS30015_ses-d2004_T1w.nii.gz --aff=highres2standard.mat --cout=highres2standard_warp  --jout=highres2highres_jac --config=T1_2_MNI152_2mm --ref=/usr/local/fsl/data/standard/MNI152_T1_2mm --refmask=/usr/local/fsl/data/standard/MNI152_T1_2mm_brain_mask.nii.gz --warpres=10,10,10
+   fnirt --iout=highres2standard_head --in=sub-OAS30015_T1w.nii.gz --aff=highres2standard.mat --cout=highres2standard_warp  --jout=highres2highres_jac --config=T1_2_MNI152_2mm --ref=/usr/local/fsl/data/standard/MNI152_T1_2mm --refmask=/usr/local/fsl/data/standard/MNI152_T1_2mm_brain_mask.nii.gz --warpres=10,10,10
    ```
 
  The results from these commands can be found in the /anat folder within the subject directory
@@ -71,11 +70,11 @@ Given the low spatial resolution and SNR of fMRI images, some registration steps
 
 ### Look at the raw data!
 
-To have an idea of how the raw data looks like before any pre-processing is performed, let us visually review the images. 
+To have an idea of how the raw data looks before any pre-processing is performed, let us visually review the images. 
 To do so, `fsleyes` is a great toolbox that can be used by typing on the command line: 
 
 ```shell 
-fsleyes func/sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz &
+fsleyes func/sub-OAS30015_task-rest_run-01_bold.nii.gz &
 ```
 
 As mentioned in the [imaging data](./imaging-data.md) section, the `&` at the end of the command allows us to keep working on the command line while having a graphical application (such as `fsleyes`) opened. Helpful options for reviewing fMRI data in fsleyes are the movie option (<img src="./assets/movie_icon.png" alt="movie" class="icon"/>) and the timeseries option (-> view -> timeseries or keyboard shortcut &#8984;-3). Check them out!
@@ -92,36 +91,36 @@ For some registrations steps we will need only one volume from our fMRI timeseri
 Run the following code to cut 1 volume in the middle of the functional file: 
 
 ```shell
-fslroi func/sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz func/sub-OAS30015_ses-d2004_task-rest_run-01_bold_1volume  80 1
+fslroi func/sub-OAS30015_task-rest_run-01_bold.nii.gz func/sub-OAS30015_task-rest_run-01_bold_1volume  80 1
 ```
 
 
 ### Motion Correction
 
 A big issue in raw rs-fMRI scans is the fact that participants usually tend to move during the length of the scanning session, therefore producing artifacts in the images. 
-Head motion results in lower quality (more blurry) images, as well as create spurious correlations between voxels in the brain. 
+Head motion results in lower quality (more blurry) images, as well as creating spurious correlations between voxels in the brain. 
 Rs-fMRI pre-processing takes care of the motion during the scan by realigning each volume within a scan to a reference volume. The reference volume is usually the first or the middle volume of the whole sequence. 
 
 To perform motion correction with fsl we use the `mcflirt` command: 
 
 ```shell
-mcflirt -in  func/sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz -out func/mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold
+mcflirt -in  func/sub-OAS30015_task-rest_run-01_bold.nii.gz -out func/mc_sub-OAS30015_task-rest_run-01_bold
 ```
 To keep track of what we are doing, it is good to add a prefix to the output describing the preprocessing steps run on it. So in this case we add `mc_` (motion corrected) to our original functional file.
 
 we can now have a look at original and motion corrected image by typing 
 
 ```shell
-fsleyes func/sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz func/mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold &
+fsleyes func/sub-OAS30015_task-rest_run-01_bold.nii.gz func/mc_sub-OAS30015_task-rest_run-01_bold &
 ```
 
-In `fsleyes` we can use the options in the lower left panel to hide or move images up. Can you guess which are the spots of the images that differ more between the two scans?  
+In `fsleyes` we can use the options in the lower left panel to hide or move images up. Can you guess which are the spots of the images that differ most between the two scans?  
 
 
 ### Standard Space Mapping
 
 Brain shape and size strongly vary across different individuals. 
-However, to perform group level analysis, voxels between different brain need to correspond. This can be achieved by *registering* or *normalizing* rs-fMRI scans in *native-space* to a standard template. 
+However, to perform group level analysis, voxels between different brains need to correspond. This can be achieved by *registering* or *normalizing* rs-fMRI scans in *native-space* to a standard template. 
 This processing step is actually made of three different steps. 
 
 1. Compute the registration of the subject T1w scan to MNI space:
@@ -133,7 +132,7 @@ This processing step is actually made of three different steps.
    With the following function we compute the transformation matrix needed to bring the fMRI file to the T1w space
 
    ```shell
-   epi_reg --epi=func/sub-OAS30015_ses-d2004_task-rest_run-01_bold_1volume.nii.gz --t1=anat/sub-OAS30015_ses-d2004_T1w.nii.gz --t1brain=anat/sub-OAS30015_ses-d2004_T1w_bet.nii.gz --out=func/func2highres
+   epi_reg --epi=func/sub-OAS30015_task-rest_run-01_bold_1volume.nii.gz --t1=anat/sub-OAS30015_T1w.nii.gz --t1brain=anat/sub-OAS30015_T1w_bet.nii.gz --out=func/func2highres
    ```
 
 1. Combine fMRI2T1w and T12MNI transformation, and apply in one go to our timeseries
@@ -145,32 +144,32 @@ This processing step is actually made of three different steps.
    # concatenate T12standard non-linear and fMRI2T1w affine transform
    convertwarp --ref=$FSLDIR/data/standard/MNI152_T1_2mm_brain --premat=func/func2highres.mat --warp1=anat/highres2standard_warp --out=func/func2standard_warp 
 
-   applywarp --ref=$FSLDIR/data/standard/MNI152_T1_2mm_brain --in=func/mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz  --out=func/MNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz  --warp=func/func2standard_warp
+   applywarp --ref=$FSLDIR/data/standard/MNI152_T1_2mm_brain --in=func/mc_sub-OAS30015_task-rest_run-01_bold.nii.gz  --out=func/MNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz  --warp=func/func2standard_warp
 
    ```
 
-The output of these functions is stored in `func/MNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz` . This is our fMRI scan in MNI space. You can check this by typing 
+The output of these functions is stored in `func/MNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz` . This is our fMRI scan in MNI space. You can check this by typing 
 
 ```shell
 # check characteristics (dimensions) of the MNI functional file 
-fslinfo func/MNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz  
+fslinfo func/MNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz  
 
 # check characteristics (dimensions) of the native-space functional file 
-fslinfo func/sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz 
+fslinfo func/sub-OAS30015_task-rest_run-01_bold.nii.gz 
 ```
 
-Lets also have a look at the MNI file!
+Let's also have a look at the MNI file!
 
 
 ```shell
-fsleyes func/MNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz &
+fsleyes func/MNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz &
 ```
 
 ### Spatial Smoothing
 
-With spatial smoothing, we are referring to the process of averaging the data points (voxels) with their neighbors. The downside of smoothing is that we loose spatial specificity (resolution). However, this process has the effect of a low-pass filter, removing high frequency and enhancing low frequency. Moreover, spatial correlations within the data are more pronounced and activation can be more easily detected. 
+With spatial smoothing, we are referring to the process of averaging the data points (voxels) with their neighbors. The downside of smoothing is that we lose spatial specificity (resolution). However, this process has the effect of a low-pass filter, removing high frequency and enhancing low frequency. Moreover, spatial correlations within the data are more pronounced and activation can be more easily detected. 
 
-In other words: Smoothing fMRI data increases signal to noise ratio. 
+In other words: Smoothing fMRI data increases signal-to-noise ratio. 
 
 The standard procedure for spatial smoothing is applying a gaussian function of a specific width, called the gaussian kernel. The size of the gaussian kernel determines how much the data is smoothed and is expressed as the Full Width at Half Maximum (FWHM). 
 ![alt text](./assets/FWHM.png)
@@ -178,7 +177,7 @@ The standard procedure for spatial smoothing is applying a gaussian function of 
 There is no standard value for smoothing fMRI data, FWHM usually varies from 2mm to 8mm. A good compromise is to use a FWHM of 4. This can be applied with `fslmaths` : 
 
 ```shell
-fslmaths func/MNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz -s 4 func/sMNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz
+fslmaths func/MNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz -s 4 func/sMNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz
 ```
 
 By changing the "-s" option we can change the FWHM, increasing or decreasing the smoothing. Try it out and check the results with `fsleyes`!
@@ -191,7 +190,7 @@ For this reason, we usually apply an high-pass filter that eliminates signal var
 
 
 ```shell
-fslmaths func/sMNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz -bptf 45.45 1 func/hpsMNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz
+fslmaths func/sMNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz -bptf 45.45 1 func/hpsMNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz
 ```
 
 ### Resting state Networks and Noise Components
@@ -203,9 +202,9 @@ Once the data is processed we can try to run an independent component analysis (
 ICA can be run using the `melodic` command from FSL. 
 
 ```shell
-melodic -i func/hpsMNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz -o func/ICA -m /usr/local/fsl/data/standard/MNI152_T1_2mm_brain_mask.nii.gz
+melodic -i func/hpsMNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz -o func/ICA -m /usr/local/fsl/data/standard/MNI152_T1_2mm_brain_mask.nii.gz
 ```
-The `-m` option specify a mask that we want to run the analysis in. In this case we use a standard brian mask provided by FSL but you could also create your own mask using the structural segmentation. 
+The `-m` option specifies a mask that we want to run the analysis in. In this case we use a standard brain mask provided by FSL but you could also create your own mask using the structural segmentation. 
 
 
 Melodic will create a directory called "ICA" in our func folder
@@ -214,7 +213,7 @@ Open the melodic_IC.nii.gz file in the output folder using `fsleyes`, threshold 
 
 Now chose a nice colormap (usually red) and overlay this to a standard brain template (-> File  -> Add Standard). 
 
-Can you recognize some of the canonical resting state networks? 
+Can you recognize some of the canonical resting-state networks? 
 
 ![alt text](./assets/RSN.png)
 
@@ -223,7 +222,7 @@ Do you see some components that you think might be linked to artefacts?
 You can clean the original signal by writing them down and running: 
 
 ```shell
-fslregfilt -i func/sMNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz -o func/denosised_sMNI_mc_sub-OAS30015_ses-d2004_task-rest_run-01_bold.nii.gz -d func/ICA/melodic_mix -f " 1,2,3"
+fslregfilt -i func/sMNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz -o func/denosised_sMNI_mc_sub-OAS30015_task-rest_run-01_bold.nii.gz -d func/ICA/melodic_mix -f " 1,2,3"
 ```
 
 with the `-f` option you can specify the components number that you want to clean from the signal.
@@ -233,6 +232,12 @@ with the `-f` option you can specify the components number that you want to clea
 
 You should now be able to fully process one fMRI scan yourself! As you know, we usually work with a bunch of data and want to automatize the pre-processing for all the scans, so that we can run it in one go. 
 
-Also following the other sections of this course, try to put all this commands in a *for* loop and use variables to run commands on your files. 
+Also following the other sections of this course, try to put all these commands in a *for* loop and use variables to run commands on your files. 
+
+If you want to discover some type of analysis that you can do on the processed data, check out some of these websites: 
+- [FSLnets](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLNets) for network analysis of fMRI scans
+- [Melodic ICA](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/MELODIC) and [Dual regression](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/DualRegression) for resting-state network connectivity
+- Graph Analysis of connectivity metrics with [Brain COnnectivity Toolbox](https://sites.google.com/site/bctnet/)
+
 
 Ciao!
