@@ -24,39 +24,37 @@ already applied during the reconstruction. Notably, no smoothing was applied dur
 
 ### Gaining familiarity with 4D PET data
 1. Prepare working directory
- a. Open a new terminal window and navigate to the directory with the unprocessed PET NIFTI images and data `/home/as2-streaming-user/data/PET_Imaging`.
- b. Use ls to view the contents of this directory
- c. Copy the data in the `UnprocessedData` directory to your local directory using the cp command.
-  ```bash
-  cp -r UnprocessedData /home/as2-streaming-user/MyFiles/PET_Tutorial/)
-  ```
-d. Use cd to change your working directory to the location you just copied the data.
-2) View PET metadata
-a. View the information in the .json file for MK-6240 and PiB images by opening the .json
-files for the MK-6240 and PiB images using gedit (e.g., use the command gedit
-sub001_pib.json in the terminal). Hint: you may want to open multiple terminal windows
-to view the .json file contents side-by-side.
-b. Note that the Time section differs with regard to the scant start and injection start times.
-Namely, the MK-6240 scan starts 70 minutes after tracer injection whereas the PiB
+   a. Open a new terminal window and navigate to the directory with the unprocessed PET NIFTI images and data `/home/as2-streaming-user/data/PET_Imaging`.
+   b. Use ls to view the contents of this directory
+   c. Copy the data in the `UnprocessedData` directory to your local directory using the cp command.
+   ```bash
+   cp -r UnprocessedData /home/as2-streaming-user/MyFiles/PET_Tutorial/)
+   ```
+   d. Use cd to change your working directory to the location you just copied the data.
+2. View PET metadata
+   a. View the information in the .json file for MK-6240 and PiB images by opening the .json files for the MK-6240 and PiB images using `gedit` (e.g., use the command `gedit
+sub001_pib.json` in the terminal). Hint: you may want to open multiple terminal windows to view the .json file contents side-by-side.
+   b. Note that the Time section differs with regard to the scant start and injection start times.
+     Namely, the MK-6240 scan starts 70 minutes after tracer injection whereas the PiB
 image starts at the same time as the scan start. The latter is often referred to as a “full
 dynamic” acquisition and enables us to calculate more accurate measurements like
 distribution volume ratio (DVR) and often additional parameters from the time-series
 data (e.g., R1 relative perfusion). If we had arterial data available, we could also use the
 full dynamic scan to perform kinetic modeling.
-c. Also note the framing sequences differs between the two tracers. MK-6240 is using
+   c. Also note the framing sequences differs between the two tracers. MK-6240 is using
 consecutive 5-minute frames whereas PiB starts with 2-minute frames for the first 10
 minutes and then 5-minute frames thereafter.
-d. For both images, the decay correction factors correspond to the scan start time
+   d. For both images, the decay correction factors correspond to the scan start time
 (indicated by “START” in the DecayCorrected field). This may or may not have
 consequences for how we quantify the image. For example, if we wanted to calculate
 the standard uptake value (SUV = C(t) / Injected Dose x body mass) we would need to
 decay correct the MK-6240 scan data to tracer injection but this is not needed to
 calculate SUV for the PiB scan because the scan started with tracer injection.
-e. Close the .json files in gedit.
-3) View 4D PET data
-a. open sub001_pib.nii using fsleyes.
-b. set the minimum threshold to 0 and the maximum threshold to 30,000 Bq/mL
-c. You are currently viewing individual PET frames that have not been denoised in any way.
+   e. Close the .json files in gedit.
+3. View 4D PET data
+   a. open `sub001_pib.nii` using `fsleyes`.
+   b. set the minimum threshold to 0 and the maximum threshold to 30,000 Bq/mL
+   c. You are currently viewing individual PET frames that have not been denoised in any way.
 Notice the high noise level in the individual PET frames. This is why we often apply some
 type of denoising algorithm to the PET data before processing and quantification.
 d. Use your cursor to scroll around the image and observe the values in voxels in the brain.
