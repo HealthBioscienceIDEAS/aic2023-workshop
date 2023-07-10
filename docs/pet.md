@@ -1,8 +1,9 @@
 ---
 layout: default
-title: Working with Positron Emission Tomography (PET) data
+title: Positron Emission Tomography (PET)
 nav_order: 4
 ---
+# Working with Positron Emission Tomography (PET) data
 
 ## Introduction
 This tutorial is an introduction to working with PET data in the context of AD neuroimaging. Due to the
