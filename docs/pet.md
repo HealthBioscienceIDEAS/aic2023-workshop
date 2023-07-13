@@ -423,7 +423,7 @@ Processed PiB DVR in order of creation (`/home/as2-streaming-user/data/PET_Imagi
 to T1-weighted MRI
   * `cghrsub001_pib.nii` - denoised 4D PiB image coregistered and resliced to T1-weighted MRI
   * `cghrsub001_pib_DVRlga.nii` – PiB DVR parametric image coregistered to T1-weighted MRI (Logan
-graphical analysis, $t^*$=35 min, $k_2’$=0.149 $min^{-1}$, cerebellum mask reference region)
+graphical analysis, $$t^*$$=35 min, $$k_2’$$=0.149 $$min^{-1}$$, cerebellum mask reference region)
   * See the file descriptions earlier in the appendix for remaining descriptions of images in this directory
 
 ## PiB DVR Pipeline
