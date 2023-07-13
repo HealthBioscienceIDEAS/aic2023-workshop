@@ -30,7 +30,7 @@ already applied during the reconstruction. Notably, no smoothing was applied dur
    1. Use `ls` to view the contents of this directory
    1. Use `cd` to change your working directory to the following location: 
        ```bash
-       cd /home/as2-streaming-user/data/PET_Imaging
+       cd /home/as2-streaming-user/data/PET_Imaging/UnprocessedData
        ```
 2. View PET metadata
    1. View the information in the .json file for MK-6240 and PiB images by opening the .json files for the MK-6240 and PiB images using `gedit` (e.g., use the command `gedit
@@ -48,7 +48,7 @@ minutes and then 5-minute frames thereafter.
    1. For both images, the decay correction factors correspond to the scan start time
 (indicated by “START” in the DecayCorrected field). This may or may not have
 consequences for how we quantify the image. For example, if we wanted to calculate
-the standard uptake value ($SUV = C(t) / InjectedDose * BodyMass$) we would need to
+the standard uptake value ($$SUV = C(t) / InjectedDose * BodyMass$$) we would need to
 decay correct the MK-6240 scan data to tracer injection but this is not needed to
 calculate SUV for the PiB scan because the scan started with tracer injection.
    1. Close the .json files in `gedit`.
@@ -59,7 +59,7 @@ calculate SUV for the PiB scan because the scan started with tracer injection.
 Notice the high noise level in the individual PET frames. This is why we often apply some
 type of denoising algorithm to the PET data before processing and quantification.
    1. Use your cursor to scroll around the image and observe the values in voxels in the brain.
-These values are activity concentrations given in $Bq/mL$, where Bq (Becquerel) is the SI
+These values are activity concentrations given in $$Bq/mL$$, where Bq (Becquerel) is the SI
 unit for radioactivity and is expressed as a rate (counts per second). In PET, the noise in
 the image is proportional to the inverse of the square root of the counts. Thus, the more
 counts detected, the less noisy the image will appear.
