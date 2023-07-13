@@ -109,10 +109,10 @@ injection (frames 14, 15, 16, and 17). Note the order you input the
 images corresponds to i1, i2, ... in the Expression field later. Once you’ve
 selected the last four frames click Done to finalize the selection.
           ![Choose Frame 14](./assets/aic_pet_imcalc_choose14.png)
+          ![Choose all the scans](./assets/aic_pet_imcalc_chosenall.png)
       1. Output Filename – enter text `sub001_pib_SUM50-70min.nii`
-      1. Output Directory – specify the output directory for the file. If you leave this
-blank, SPM will output the file in the present working directory (i.e., the
-directory that SPM was launched from in the command line)
+       ![Select output](./assets/aic_pet_imcalc_output.png)
+      1. Output Directory – specify the output directory for the file. If you leave this blank, SPM will output the file in the present working directory (i.e., the directory that SPM was launched from in the command line)
       1. Expression – because the frames are all 5 minutes long at this part of the
 sequence, we can simply take the average to sum the last 20 minutes of counts.
 Enter the expression
@@ -120,9 +120,11 @@ Enter the expression
           (i1 + i2 + i3 +i4)/4
           ```
          * note that taking the average of these frames is equivalent to summing all of the detected counts across the frames
+         ![Make expression](./assets/aic_pet_imcalc_expression.png)
 and dividing by the total amount of time that has passed during those frames (i.e., 20 min).
       1. Data Matrix, Masking, Interpolation can all use default values
       1. Data Type – specify FLOAT32
+       ![Choose Float](./assets/aic_pet_imcalc_float.png)
    1. Verify ImCalc inputs and then run the batch by pressing the green play button at the top
 of the batch editor. This should create a new NIfTI file with the late-frame summed data.
    1. Open the 50-70 min SUM image in FSLeyes and note the difference in noise properties
