@@ -48,7 +48,7 @@ minutes and then 5-minute frames thereafter.
    1. For both images, the decay correction factors correspond to the scan start time
 (indicated by “START” in the DecayCorrected field). This may or may not have
 consequences for how we quantify the image. For example, if we wanted to calculate
-the standard uptake value ($SUV = C(t) / Injected Dose * body\_mass$) we would need to
+the standard uptake value ($SUV = C(t) / InjectedDose * BodyMass$) we would need to
 decay correct the MK-6240 scan data to tracer injection but this is not needed to
 calculate SUV for the PiB scan because the scan started with tracer injection.
    1. Close the .json files in `gedit`.
