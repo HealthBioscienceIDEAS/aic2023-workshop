@@ -2,7 +2,7 @@
 layout: default
 title: Structural MRI 
 nav_order: 3
-usemathjax: true
+math: mathjax3
 ---
 
 # Structural Magnetic Resonance Imaging (MRI)
