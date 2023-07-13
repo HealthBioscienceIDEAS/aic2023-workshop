@@ -20,7 +20,7 @@ information can be derived from them.
 PET data are collected on the scanner typically in *list mode*. This is quite literally a logged record of every
 event the scanner detects, but this type of data is not all that useful for interpretation. Viewing the
 images requires that the list mode data be reconstructed. The provided images have already been
-reconstructed with the widely-used Ordered Subset Expectation Maximization (OSEM) algorithm with common corrections (scatter, dead time, decay, etc.,)
+reconstructed with the widely-used Ordered Subset Expectation Maximization (OSEM) algorithm with common corrections (scatter, dead time, decay, etc.)
 already applied during the reconstruction. Notably, no smoothing was applied during the PET reconstruction.
 
 ### Gaining familiarity with 4D PET data
@@ -29,7 +29,7 @@ already applied during the reconstruction. Notably, no smoothing was applied dur
    1. Use `ls` to view the contents of this directory
    1. Copy the data in the `UnprocessedData` directory to your local directory using the cp command.
        ```bash
-       cp -r UnprocessedData /home/as2-streaming-user/MyFiles/PET_Tutorial/)
+       cp -r UnprocessedData /home/as2-streaming-user/MyFiles/PET_Tutorial/
        ```
    1. Use `cd` to change your working directory to the location you just copied the data.
 2. View PET metadata
@@ -48,7 +48,7 @@ minutes and then 5-minute frames thereafter.
    1. For both images, the decay correction factors correspond to the scan start time
 (indicated by “START” in the DecayCorrected field). This may or may not have
 consequences for how we quantify the image. For example, if we wanted to calculate
-the standard uptake value ($SUV = C(t) / Injected Dose x body mass$) we would need to
+the standard uptake value ($SUV = C(t) / Injected Dose * body\_mass$) we would need to
 decay correct the MK-6240 scan data to tracer injection but this is not needed to
 calculate SUV for the PiB scan because the scan started with tracer injection.
    1. Close the .json files in `gedit`.
@@ -75,7 +75,7 @@ the later frames are noisier than the beginning frames, again, this has to do wi
 counting statistics and the reduced counts detected over time due to radioactive decay
 and lower tracer concentration in the brain at later timepoints.
    1. Close the 4D PET image in FSL by selecting the image in the Overlay list at the bottom of
-the page and clicking Overlay>Remove from the menu at the top of the page.
+the page and clicking Overlay -> Remove from the menu at the top of the page.
 
 ### Creating a SUM PET image
 We’ll create two different SUM images from the PiB scan; one for early- and one for late-frame data to
@@ -84,11 +84,12 @@ data will SUM 0-20 minutes post-injection whereas the late frame will SUM 50-70 
 We’ll do the late-frame image first and then the early-frame image. You can reference the
 FrameTimeStart and FrameTimeEnd fields in the .json file to determine which frames correspond to 0-20
 min and 50-70 min postinjection.
+
 4. Create a SUM image
    1. Open SPM12 by typing `spm` in the command line. At the prompt, select the PET & VBM
 option.
-   1. Select the ImCalc module.
-   1. For each variable in the GUI, you will need to specify values using the Specify button.
+   1. Select the `ImCalc` module.
+   1. For each variable in the GUI, you will need to specify values using the `Specify` button.
 Use the values specified below for each variable listed.
       1. `Input Images` – here we want to specify the input images that we are going to
 use to perform the image calculation. The order that the images are specified will
@@ -99,7 +100,7 @@ using the Frames field. The frame number is then delineated by the filename
 followed by a comma and the frame number. Note that SPM uses index 1 for the
 first frame, which corresponds to index 0 in FSL.
          1. Enter the frame number corresponding to the frame that spans 50-55
-min post injection (frame number 14) and hit enter. Click on the
+min post-injection (frame number 14) and hit enter. Click on the
 `sub001_pib.nii,14` file to add this to the list. Enter the next frame
 number and similarly add it to the list. Repeat until you’ve added the
 last four frames of the PiB image corresponding to 50-70 min post-
@@ -112,20 +113,24 @@ blank, SPM will output the file in the present working directory (i.e., the
 directory that SPM was launched from in the command line)
       1. Expression – because the frames are all 5 minutes long at this part of the
 sequence, we can simply take the average to sum the last 20 minutes of counts.
-Enter the expression `(i1 + i2 + i3 +i4)/4`
+Enter the expression
+          ```matlab
+          (i1 + i2 + i3 +i4)/4
+          ```
          * note that taking the average of these frames is equivalent to summing all of the detected counts across the frames
 and dividing by the total amount of time that has passed during those frames (i.e., 20 min).
       1. Data Matrix, Masking, Interpolation can all use default values
       1. Data Type – specify FLOAT32
    1. Verify ImCalc inputs and then run the batch by pressing the green play button at the top
 of the batch editor. This should create a new NIfTI file with the late-frame summed data.
-   1. Open the 50-70min SUM image in FSLeyes and note the difference in noise properties
+   1. Open the 50-70 min SUM image in FSLeyes and note the difference in noise properties
 vs. those you observed in a single frame. The SNR has improved because we are now
 viewing an image with more total counts. Notice that you can now more clearly see
 some contrast between the precuneus and the adjacent occipital cortex in the sagittal
 plane just to the left or right of mid-sagittal. You can similarly see differences in intensity
 between much of the cortex and the cerebellar GM, a common reference region used
 for amyloid PET as it typically has negligible specific binding in the cerebellum.
+
      **Do you think this person is amyloid positive or negative?**
       
    1. Repeat the above steps to generate the SUM image for the early frame data. Make sure
@@ -156,13 +161,13 @@ maximum value of the kernel.
 5. Apply smoothing to SUM images
    1. Click on the Smooth button to launch the Smooth module in SPM and use the following
 inputs:
-      1. Image to Smooth - Specify the two SUM images (you can do both at the same
+      1. `Image to Smooth` - Specify the two SUM images (you can do both at the same
 time)
-      1. FWHM – 4 4 4 (this specified an isotropic 4 mm full-width half Gaussian
+      1. `FWHM` – 4 4 4 (this specified an isotropic 4 mm full-width half Gaussian
 smoothing kernel)
-      1. Data Type – Same
-      1. Implicit Mask – No
-      1. Filename prefix – ‘s’ (this prepends an “s” onto the filename to indicate the
+      1. `Data Type` – Same
+      1. `Implicit Mask` – No
+      1. `Filename prefix` – ‘s’ (this prepends an “s” onto the filename to indicate the
 newly created image was smoothed)
    1. Press the green play button to run the smoothing module.
    1. Close the SPM batch editor.
@@ -175,11 +180,12 @@ considerable regional detail if we align our PET images to an anatomical referen
 SPM12’s Coregistration function to register the PET data to a T1-weighted MRI. We’ll first view the
 problem in FSL to demonstrate why we need to register the images and then perform the Coregistration
 to align the PET data to the T1-w MRI.
+
 6. View images in FSL
    1. Open the `sub001_t1mri.nii` and in FSL. Use the down arrow next to the Overlay list to
 move the T1 to the bottom of the list. Select the T1 and set the window min and max to
 0 and 1,400, respectively.
-   1. Select the smoothed 50-70 min SUM pib image in the viewer and adjust the min and
+   1. Select the smoothed 50-70 min SUM PIB image in the viewer and adjust the min and
 max window level to 0 and 30,000 respectively. Select the `Hot [Brain colours]` colormap
 for the PET image. Reduce the Opacity slider down until you can see both the MRI in the
 background and the PET image in the foreground.
@@ -203,7 +209,7 @@ processing drop down. This function will estimate the parameters needed to align
 source image to the reference image, write those transformations to the NIfTI headers
 for those files and will create new images with the image matrices resliced to align voxel-
 to-voxel with the reference image.
-      1. Select sub001_t1mri.nii for the reference image.
+      1. Select `sub001_t1mri.nii` for the reference image.
       1. Select the smoothed 50-70 SUM image for the source image. `ssub001_pib_SUM50-70min.nii`
       1. Optional: if you’d like to also apply this registration to the 4D data, Select the 4D
 data for Other Images. You will need to enter each volume in the 4D image to
@@ -251,7 +257,7 @@ specifically using the 50-70 min SUM image to generate the SUVR image as this is
 PiB has reached a pseudo “steady state” wherein binding estimates are more stable.
 8. Create a hand-drawn cerebellum GM ROI
    1. In FSL, turn off the PET overlay.
-   1. Turn on Edit mode by selecting Tools>Edit Mode
+   1. Turn on Edit mode by selecting Tools -> Edit Mode
    1. In the image viewer, navigate to the inferior portion of the cerebellar GM (~Z voxel
 location 30). You should be 1-2 axial planes below the inferior GM/WM boundary in the
 cerebellum.
@@ -259,12 +265,12 @@ cerebellum.
 that looks like a sheet of paper to create a 3D mask using the T1-w image as a reference.
    1. Rename the mask `rsub001_cblm_mask` using the text box on the top-left side of
 FSLeyes
-   1. Using the pencil and fill tools, hand draw a circles in the left and right inferior cerebellum
+   1. Using the pencil and fill tools, hand draw circles in the left and right inferior cerebellum
 on the transaxial plane. Use the fill tool to fill in the inner part of the circle. Ensure the
 Fill value is set to 1. Using a Selection size of 3 voxels or greater will help draw the ROI
 more easily. When you’re done drawing your ROI, click the select tool to enable you to
 scroll around the image viewer.
-   1. Select the mask image and save the image (Overlay>Save) as a new NIfTI file named `rsub001_cblm_mask.nii.`
+   1. Select the mask image and save the image (Overlay -> Save) as a new NIfTI file named `rsub001_cblm_mask.nii.`
 9. Create the SUVR Image with the inferior cerebellum reference region
    1. For the expression, we want to divide the SUM 50-70 min pib image by the mean
 intensity in the cerebellum ROI that we just generated by hand. To accomplish this, we
@@ -276,7 +282,7 @@ using fslstats
        fslstats rssub001_pib_SUM50-70min.nii -k rsub001_cblm_mask.nii -M
        ```
    1. Create the SUVR image by dividing the SUM 50-70min image by the mean activity
-concentration output by fslstats
+concentration output by `fslstats`
        ```bash
        fslmaths rssub001_pib_SUM50-70min.nii -div {ROI mean} rssub001_pib_SUVR50-70min.nii
        ```
@@ -289,7 +295,7 @@ intensity window to 0 and 3, and set the opacity to ~50%.
 and 3 SUVR. For interpretation, values ~>1 (plus some noise) in the gray matter indicate
 specific tracer binding to beta-amyloid plaques.
 
-      ** Knowing this, which regions do you suspect have amyloid plaques? Which regions have the highest density of amyloid plaques?
+      **Knowing this, which regions do you suspect have amyloid plaques? Which regions have the highest density of amyloid plaques?**
 
 ### Test your knowledge
 You have created a SUVR image for PiB, which used a dynamic acquisition wherein the scan started at
@@ -350,7 +356,7 @@ series to use as a reference image to align each frame. Because the PiB framing
 sequence has different frame durations, we cannot simply average the frames as we
 would in fMRI, but instead need to create a SUM image of the entire 70-minute
 acquisition using a weighted average.
-   1. Open the ImCalc module in SPM.
+   1. Open the `ImCalc` module in SPM.
    1. Specify all frames of the smoothed 4D PiB image (ssub001_pib.nii) as Input Images. Be
 sure to maintain the frame order on the file input.
    1. Name the output file `ssub001_pib_SUM0-70min.nii`
@@ -361,7 +367,7 @@ frames. Recall that the frame durations are stored in the .json file.
         ```
    1. Use FLOAT32 for the Data Type
    1. Run the module using the green play arrow.
-   1. Close the SPM ImCalc module.
+   1. Close the SPM `ImCalc` module.
 5. Perform Interframe alignment using SPM12 realign
    1. Open the Realign: Estimate and Reslice module in SPM12
    1. Select data and click Specify
@@ -378,9 +384,9 @@ frames. Recall that the frame durations are stored in the .json file.
 and rotation parameters used to correct for motion in each frame. Note these are small
 changes typically <1-2 mm translation and <2 degrees rotation.
    1. Close the SPM realign module
-   1. View the resultant 4D image in FSLeyes (rssub001_pib.nii) using a display min and max
+   1. View the resultant 4D image in FSLeyes (`rssub001_pib.nii`) using a display min and max
 of 0 to 30,000. Navigate in the viewer to view the sagittal plane just off mid-sagittal.
-Place your crosshairs at the most inferior part of the orbitOfrontal cortex and advance
+Place your crosshairs at the most inferior part of the orbitofrontal cortex and advance
 through the PET frames. How did the realignment perform? Are you still seeing rotation
 in the sagittal plane between early and late frames?
    1. Now change the max window to 100 to saturate the image and view the outline of the
@@ -397,8 +403,7 @@ Unprocessed files (`/home/as2-streaming-user/data/PET_Imaging/UnprocessedData/`)
 * `sub001_mk6240.json` – metadata for MK-6240 PET scan
 * `sub001_pib.json` – metadata for PiB PET scan
 
-Processed files in order of tutorial creation (`/home/as2-streaming-
-user/data/PET_Imaging/ProcessedTutorial/`):
+Processed files in order of tutorial creation (`/home/as2-streaming-user/data/PET_Imaging/ProcessedTutorial/`):
 * PiB SUVR tutorial
   * `sub001_pib_SUM50-70min.nii` – PiB PET summed from 50-70 min post-injection
   * `sub001_pib_SUM0-20min.nii` – PiB PET summed from 0-20 min post-injection
@@ -413,8 +418,7 @@ user/data/PET_Imaging/ProcessedTutorial/`):
   * `rssub001_mk6240_SUM70-90min.nii` – smoothed SUM70-90 min MK-6240 image registered and resliced to T1-weighted MRI
   * `rssub001_mk6240_SUVR70-90min.nii.gz` – MK-6240 SUVR image registered to T1-weighted MRI
 
-ProcessedPiBDVR in order of creation (`/home/as2-streaming-
-user/data/PET_Imaging/ProcessedPiBDVR/`):
+Processed PiB DVR in order of creation (`/home/as2-streaming-user/data/PET_Imaging/ProcessedPiBDVR/`):
   * `ssub001_pib.nii` – smoothed 4D PiB time series
   * `sub001_pib_SUM0-70min.nii` – PiB SUM 0-70 min
   * `rsub001_pib.nii` – realigned 4D PiB time series
