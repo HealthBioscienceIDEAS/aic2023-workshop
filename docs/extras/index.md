@@ -23,8 +23,7 @@ This section contains additional material which you will find helpful for the wo
 | rm | Remove | Deletes a file or a directory | `rm dir1/bad_file` |
 | cat | Concatenate | Prints out the contents of a file | `cat results.txt` |
 | more | more | Prints out the contents of a file. Better for large files to scroll | `more results.txt` |
-| nano, emacs, gedit | Text editor | Programs that edit plain text files (no formatting) | `emacs dir1/inputs.txt`
-`nano dir1/inputs.txt` |
+| nano, emacs, gedit | Text editor | Programs that edit plain text files (no formatting) | `emacs dir1/inputs.txt` `nano dir1/inputs.txt` |
 
 
 
