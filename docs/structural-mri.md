@@ -102,7 +102,7 @@ Now that we are happy with the bias correction, lets look at the tissue segmenta
    1. Not including other tissue (WM, CSF, non-brain tissue that has a similar intensity to GM)
 
 ### Exercise 3
-Now do the same steps with the white matter image `c1sub-OAS30003_T1w.nii` and the cerebrospinal fluid image `c3sub-OAS30003_T1w.nii`. Choose different color colormaps. 
+Now do the same steps with the white matter image `c2sub-OAS30003_T1w.nii` and the cerebrospinal fluid image `c3sub-OAS30003_T1w.nii`. Choose different color colormaps. 
 
 *Do these images look like they have identified the white matter and CSF in the T1 weighted image correctly?*
 
