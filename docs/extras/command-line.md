@@ -23,13 +23,13 @@ While GUIs are often the best way to interact with your computer, using the comm
 
 ## Getting started
 In this section, we are going to go through some basic steps of working with the command line. Make sure you are able to connect to your working environment by following the directions in the [Connecting](./connecting.md) section of this website. As a reminder, you should have a desktop on your virtual machine that looks something like this:
-![Desktop screenshot](../assets/desktop_screenshot.png)
+![Desktop screenshot](../assets/aic_smri_desktop.png)
 At the bottom of the the screen, you will see a taskbar. One of the icons is a black box with a white dollar sign in it. That will launch the shell (Terminal Emulator) to give you access to the command line. Click on that to launch the terminal.
-![Terminal launch at bottom](../assets/launch_terminal.png)
+![Terminal launch at bottom](../assets/aic_smri_launch_terminal.png)
 
 ## Navigating the file structure
 The desktop of your virtual machine will have a black window with green text in it. This is the shell. We will enter some commands and see what the responses are.
-![Open terminal](../assets/open_terminal.png)
+![Open terminal](../assets/aic_smri_terminal_window.png)
 1. The first thing we are going to do is figure out where we are. We do that using the command `pwd` which stands for *present working directory*. Type it in the command line and see what the response is:
     ```shell
     pwd
@@ -48,7 +48,7 @@ The desktop of your virtual machine will have a black window with green text in 
 
     If you want to list the contents of a different directory, just put it after the `ls -l`
     ```shell
-    ls -l oasis
+    ls -l data
     ```
 
 1. The `data` directory in your home directory is where you will be storing your work. So let us move into that directory using the `cd` or *change directory* command:
@@ -84,18 +84,18 @@ The desktop of your virtual machine will have a black window with green text in 
 * **Previous commands** If you want to see a list of commands that you have run, you can type in the `history` command. You can also scroll through previous commands by tapping the up and down arrow keys and then hit Return when you found the command you want to run again.
 * **Paths** Locations in the file system, whether they are files or directories, are known as paths. Paths can be referred to in *absolute* terms (like a postcode or latitude and longitude) or *relative* terms (like directions to your work from home). In some cases it is more convenient to use absolute paths, and in others, relative paths are nicer. Absolute paths always begin with a `/` character. From your home directory, the following two commands do the exact same thing.
 ```shell
-ls bin
-ls /home/ubuntu/bin
+ls data
+ls /home/as2-streaming-user/data
 ```
 
 ## Processing files
-In this section, we will go over how to copy and view the contents of the files. There is some helpful information in a file called README that we want to look at in more detail. 
-1. Let's copy it over from a subfolder the `oasis` directory into our new `mywork` directory. We do this using the `cp` or *copy* command. We first specify the *source*, or the file/directory that we want to copy (`oasis/subjects/README`), and then we specify the destination path where we want to make the copy (`data/mywork`). **Before we do this command, let's make sure we are back in the home directory first** 
+In this section, we will go over how to copy and view the contents of the files. There is some helpful information about one of the images in our Structural MRI lesson that we want to look at in more detail. 
+1. Let's copy it over from the directory it is currently located into our new `mywork` directory. We do this using the `cp` or *copy* command. We first specify the *source*, or the file/directory that we want to copy (`data/StructuralMRI/sub-OAS_30003_T1w.json`), and then we specify the destination path where we want to make the copy (`data/mywork`). **Before we do this command, let's make sure we are back in the home directory first** 
     ```shell
     # Go back to the home directory
     cd
     # Copy the file.
-    cp oasis/subjects/README data/mywork
+    cp data/StructuralMRI/sub-OAS_30003_T1w.json data/mywork
     ```
 1. Now let us confirm that the copy of the file is where we expect it to be:  
     ```shell
@@ -103,15 +103,15 @@ In this section, we will go over how to copy and view the contents of the files.
     ```
 1. Finally, let's look at the contents of the file. We can do that with the command `cat` which concatenates and prints files.
     ```shell
-    cat data/mywork/README 
+    cat data/mywork/sub-OAS_30003_T1w.json 
     ``` 
 1. That just flew off the screen didn't it? If we want to have a bit more control over how we view larger files, then we can use the `more` command. Press the return key to scroll one line at a time or the space bar to scroll a whole screen page at a time.
     ```shell
-    more data/mywork/README 
+    more data/mywork/sub-OAS_30003_T1w.json 
     ```
 1. We no longer need that file anymore (remember it is just a copy), so we can remove files by using the `rm` command, but **BE CAREFUL** and check the command twice before executing the command, as this cannot be undone! Watch out for any spaces or any special characters like the `*` and `?` as they mean something special in the shell. 
     ```shell
-    rm data/mywork/README 
+    rm data/mywork/sub-OAS_30003_T1w.json 
     ```
 
 ## Next Steps
