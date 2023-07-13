@@ -2,6 +2,7 @@
 layout: default
 title: Positron Emission Tomography (PET)
 nav_order: 4
+math: mathjax3
 ---
 # Working with Positron Emission Tomography (PET) data
 
