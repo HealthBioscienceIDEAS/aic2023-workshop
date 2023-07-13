@@ -25,7 +25,7 @@ cd   data/FunctionalMRI
 Now go into the subject folder and list the content to have an idea of what data we are going to use. 
 
 ```shell
-cd OAS30015_MR
+cd OAS30015
 
 ls 
 ```
