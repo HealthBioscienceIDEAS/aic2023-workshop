@@ -10,6 +10,7 @@ This section contains additional material which you will find helpful for the wo
 * [Getting started with the command line](./command-line.md): Many neuroimaging software packages do not use a graphical interface but require you to be comfortable typing in commands into the computer. This section gives an overview of some basic commands and how to traverse a Linux filesystem.
 
 ## Command line cheatsheet
+
 | Command | Name | Function | Example Usage | 
 | --- | --- | --- | --- |
 | man | Manual | HELP! | `man cd` |
