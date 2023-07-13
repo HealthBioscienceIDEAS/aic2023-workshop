@@ -23,7 +23,7 @@ While GUIs are often the best way to interact with your computer, using the comm
 
 ## Getting started
 In this section, we are going to go through some basic steps of working with the command line. Make sure you are able to connect to your working environment by following the directions in the [Connecting](./connecting.md) section of this website. As a reminder, you should have a desktop on your virtual machine that looks something like this:
-![Desktop screenshot](../assets/aic-smri_desktop.png)
+![Desktop screenshot](../assets/aic_smri_desktop.png)
 At the bottom of the the screen, you will see a taskbar. One of the icons is a black box with a white dollar sign in it. That will launch the shell (Terminal Emulator) to give you access to the command line. Click on that to launch the terminal.
 ![Terminal launch at bottom](../assets/aic_smri_launch_terminal.png)
 
