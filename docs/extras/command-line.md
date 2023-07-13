@@ -84,8 +84,8 @@ The desktop of your virtual machine will have a black window with green text in 
 * **Previous commands** If you want to see a list of commands that you have run, you can type in the `history` command. You can also scroll through previous commands by tapping the up and down arrow keys and then hit Return when you found the command you want to run again.
 * **Paths** Locations in the file system, whether they are files or directories, are known as paths. Paths can be referred to in *absolute* terms (like a postcode or latitude and longitude) or *relative* terms (like directions to your work from home). In some cases it is more convenient to use absolute paths, and in others, relative paths are nicer. Absolute paths always begin with a `/` character. From your home directory, the following two commands do the exact same thing.
 ```shell
-ls bin
-ls /home/ubuntu/bin
+ls data
+ls /home/as2-streaming-user/data
 ```
 
 ## Processing files
