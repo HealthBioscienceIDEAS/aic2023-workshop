@@ -30,7 +30,7 @@ already applied during the reconstruction. Notably, no smoothing was applied dur
    1. Use `ls` to view the contents of this directory
    1. Use `cd` to change your working directory to the following location: 
        ```bash
-       cd /home/as2-streaming-user/data/PET_Imaging
+       cd /home/as2-streaming-user/data/PET_Imaging/UnprocessedData
        ```
 2. View PET metadata
    1. View the information in the .json file for MK-6240 and PiB images by opening the .json files for the MK-6240 and PiB images using `gedit` (e.g., use the command `gedit
@@ -48,7 +48,7 @@ minutes and then 5-minute frames thereafter.
    1. For both images, the decay correction factors correspond to the scan start time
 (indicated by “START” in the DecayCorrected field). This may or may not have
 consequences for how we quantify the image. For example, if we wanted to calculate
-the standard uptake value ($SUV = C(t) / InjectedDose * BodyMass$) we would need to
+the standard uptake value ($$SUV = C(t) / InjectedDose * BodyMass$$) we would need to
 decay correct the MK-6240 scan data to tracer injection but this is not needed to
 calculate SUV for the PiB scan because the scan started with tracer injection.
    1. Close the .json files in `gedit`.
@@ -59,7 +59,7 @@ calculate SUV for the PiB scan because the scan started with tracer injection.
 Notice the high noise level in the individual PET frames. This is why we often apply some
 type of denoising algorithm to the PET data before processing and quantification.
    1. Use your cursor to scroll around the image and observe the values in voxels in the brain.
-These values are activity concentrations given in $Bq/mL$, where Bq (Becquerel) is the SI
+These values are activity concentrations given in $$Bq/mL$$, where Bq (Becquerel) is the SI
 unit for radioactivity and is expressed as a rate (counts per second). In PET, the noise in
 the image is proportional to the inverse of the square root of the counts. Thus, the more
 counts detected, the less noisy the image will appear.
@@ -86,9 +86,10 @@ FrameTimeStart and FrameTimeEnd fields in the .json file to determine which fram
 min and 50-70 min postinjection.
 
 4. Create a SUM image
-   1. Open SPM12 by typing `spm` in the command line. At the prompt, select the PET & VBM
+   1. Open SPM12 by typing `spm pet` in the command line. 
 option.
    1. Select the `ImCalc` module.
+    ![Start ImCalc](./assets/aic_pet_imcalc_start.png)
    1. For each variable in the GUI, you will need to specify values using the `Specify` button.
 Use the values specified below for each variable listed.
       1. `Input Images` – here we want to specify the input images that we are going to
@@ -107,10 +108,11 @@ last four frames of the PiB image corresponding to 50-70 min post-
 injection (frames 14, 15, 16, and 17). Note the order you input the
 images corresponds to i1, i2, ... in the Expression field later. Once you’ve
 selected the last four frames click Done to finalize the selection.
+          ![Choose Frame 14](./assets/aic_pet_imcalc_choose14.png)
+          ![Choose all the scans](./assets/aic_pet_imcalc_chosenall.png)
       1. Output Filename – enter text `sub001_pib_SUM50-70min.nii`
-      1. Output Directory – specify the output directory for the file. If you leave this
-blank, SPM will output the file in the present working directory (i.e., the
-directory that SPM was launched from in the command line)
+       ![Select output](./assets/aic_pet_imcalc_output.png)
+      1. Output Directory – specify the output directory for the file. If you leave this blank, SPM will output the file in the present working directory (i.e., the directory that SPM was launched from in the command line)
       1. Expression – because the frames are all 5 minutes long at this part of the
 sequence, we can simply take the average to sum the last 20 minutes of counts.
 Enter the expression
@@ -118,9 +120,11 @@ Enter the expression
           (i1 + i2 + i3 +i4)/4
           ```
          * note that taking the average of these frames is equivalent to summing all of the detected counts across the frames
+         ![Make expression](./assets/aic_pet_imcalc_expression.png)
 and dividing by the total amount of time that has passed during those frames (i.e., 20 min).
       1. Data Matrix, Masking, Interpolation can all use default values
       1. Data Type – specify FLOAT32
+       ![Choose Float](./assets/aic_pet_imcalc_float.png)
    1. Verify ImCalc inputs and then run the batch by pressing the green play button at the top
 of the batch editor. This should create a new NIfTI file with the late-frame summed data.
    1. Open the 50-70 min SUM image in FSLeyes and note the difference in noise properties
@@ -133,21 +137,12 @@ for amyloid PET as it typically has negligible specific binding in the cerebellu
 
      **Do you think this person is amyloid positive or negative?**
       
-   1. Repeat the above steps to generate the SUM image for the early frame data. Make sure
-to remove the previous volumes before adding the new volume in the Input Images. You
-will need to use the first seven frames corresponding to the first 20 min of data. Note
-that the frames are not all the same duration and a straight average is no longer
-equivalent to summing all of the counts and dividing by the total time. How can we use a
-weighted average to account for the differences in frame durations between the first five
-and last two frames of the first 20 minutes?
+   1. Repeat the above steps to generate the SUM image for the early frame data. Make sure to remove the previous volumes before adding the new volume in the Input Images. You will need to use the first seven frames corresponding to the first 20 min of data. Note that the frames are not all the same duration and a straight average is no longer equivalent to summing all of the counts and dividing by the total time. How can we use a weighted average to account for the differences in frame durations between the first five and last two frames of the first 20 minutes?
        ```matlab
        (i1*2 + i2*2 + i3*2 + i4*2 +i5*2 + i6*5 + i7*5) / 20
        ```
       1. Name this file `sub001_pib_SUM0-20min.nii`
-   1. Open the 0-20 min SUM image in FSLeyes and compare to the 50-70 min SUM image.
-Note the differences in GM/WM contrast between the images and the differences in
-noise properties. You will likely have to change the max intensity settings in both images
-to be able to observe the differences in contrast.
+   1. Open the 0-20 min SUM image in FSLeyes and compare to the 50-70 min SUM image. Note the differences in GM/WM contrast between the images and the differences in noise properties. You will likely have to change the max intensity settings in both images to be able to observe the differences in contrast.
    1. Close the SPM batch editor
 
 ### Image Smoothing
@@ -428,7 +423,7 @@ Processed PiB DVR in order of creation (`/home/as2-streaming-user/data/PET_Imagi
 to T1-weighted MRI
   * `cghrsub001_pib.nii` - denoised 4D PiB image coregistered and resliced to T1-weighted MRI
   * `cghrsub001_pib_DVRlga.nii` – PiB DVR parametric image coregistered to T1-weighted MRI (Logan
-graphical analysis, $t^*$=35 min, $k_2’$=0.149 $min^{-1}$, cerebellum mask reference region)
+graphical analysis, $$t^*$$=35 min, $$k_2’$$=0.149 $$min^{-1}$$, cerebellum mask reference region)
   * See the file descriptions earlier in the appendix for remaining descriptions of images in this directory
 
 ## PiB DVR Pipeline
