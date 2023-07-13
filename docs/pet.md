@@ -2,6 +2,7 @@
 layout: default
 title: Positron Emission Tomography (PET)
 nav_order: 4
+math: mathjax3
 ---
 # Working with Positron Emission Tomography (PET) data
 
@@ -27,11 +28,10 @@ already applied during the reconstruction. Notably, no smoothing was applied dur
 1. Prepare working directory
    1. Open a new terminal window and navigate to the directory with the unprocessed PET NIfTI images and data `/home/as2-streaming-user/data/PET_Imaging`.
    1. Use `ls` to view the contents of this directory
-   1. Copy the data in the `UnprocessedData` directory to your local directory using the cp command.
+   1. Use `cd` to change your working directory to the following location: 
        ```bash
-       cp -r UnprocessedData /home/as2-streaming-user/MyFiles/PET_Tutorial/
+       cd /home/as2-streaming-user/data/PET_Imaging
        ```
-   1. Use `cd` to change your working directory to the location you just copied the data.
 2. View PET metadata
    1. View the information in the .json file for MK-6240 and PiB images by opening the .json files for the MK-6240 and PiB images using `gedit` (e.g., use the command `gedit
 sub001_pib.json` in the terminal). Hint: you may want to open multiple terminal windows to view the .json file contents side-by-side.

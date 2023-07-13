@@ -2,6 +2,7 @@
 layout: default
 title: Structural MRI 
 nav_order: 3
+math: mathjax3
 ---
 
 # Structural Magnetic Resonance Imaging (MRI)
@@ -101,7 +102,7 @@ Now that we are happy with the bias correction, lets look at the tissue segmenta
    1. Not including other tissue (WM, CSF, non-brain tissue that has a similar intensity to GM)
 
 ### Exercise 3
-Now do the same steps with the white matter image `c1sub-OAS30003_T1w.nii` and the cerebrospinal fluid image `c3sub-OAS30003_T1w.nii`. Choose different color colormaps. 
+Now do the same steps with the white matter image `c2sub-OAS30003_T1w.nii` and the cerebrospinal fluid image `c3sub-OAS30003_T1w.nii`. Choose different color colormaps. 
 
 *Do these images look like they have identified the white matter and CSF in the T1 weighted image correctly?*
 
@@ -116,7 +117,7 @@ Then we will run this command to get the total grey matter volume:
 ```bash
 fslstats c1sub-OAS30003_T1w.nii -V
 ```
-This will produce two numbers. The first number is the number of voxels in the grey matter. These voxels as discussed earlier have physical dimensions indicating how the volume that each individual voxel represents. So the second value indicates the total volume of the grey matter (usually represented in units of $mm^3$).
+This will produce two numbers. The first number is the number of voxels in the grey matter. These voxels as discussed earlier have physical dimensions indicating how the volume that each individual voxel represents. So the second value indicates the total volume of the grey matter (usually represented in units of $$mm^3$$).
 
 
 ## Coregistration to standard space

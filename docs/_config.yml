@@ -35,6 +35,7 @@ search_enabled: true
 
 # Build settings
 remote_theme: just-the-docs/just-the-docs
+markdown: kramdown 
 
 gh_edit_link: true # show or hide edit this page link
 
