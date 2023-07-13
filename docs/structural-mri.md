@@ -2,6 +2,7 @@
 layout: default
 title: Structural MRI 
 nav_order: 3
+usemathjax: true
 ---
 
 # Structural Magnetic Resonance Imaging (MRI)
@@ -116,7 +117,7 @@ Then we will run this command to get the total grey matter volume:
 ```bash
 fslstats c1sub-OAS30003_T1w.nii -V
 ```
-This will produce two numbers. The first number is the number of voxels in the grey matter. These voxels as discussed earlier have physical dimensions indicating how the volume that each individual voxel represents. So the second value indicates the total volume of the grey matter (usually represented in units of $mm^3$).
+This will produce two numbers. The first number is the number of voxels in the grey matter. These voxels as discussed earlier have physical dimensions indicating how the volume that each individual voxel represents. So the second value indicates the total volume of the grey matter (usually represented in units of $$mm^3$$).
 
 
 ## Coregistration to standard space
