@@ -86,9 +86,10 @@ FrameTimeStart and FrameTimeEnd fields in the .json file to determine which fram
 min and 50-70 min postinjection.
 
 4. Create a SUM image
-   1. Open SPM12 by typing `spm` in the command line. At the prompt, select the PET & VBM
+   1. Open SPM12 by typing `spm pet` in the command line. 
 option.
    1. Select the `ImCalc` module.
+    ![Start ImCalc](./assets/aic_pet_imcalc_start.png)
    1. For each variable in the GUI, you will need to specify values using the `Specify` button.
 Use the values specified below for each variable listed.
       1. `Input Images` – here we want to specify the input images that we are going to
@@ -107,6 +108,7 @@ last four frames of the PiB image corresponding to 50-70 min post-
 injection (frames 14, 15, 16, and 17). Note the order you input the
 images corresponds to i1, i2, ... in the Expression field later. Once you’ve
 selected the last four frames click Done to finalize the selection.
+          ![Choose Frame 14](./assets/aic_pet_imcalc_choose14.png)
       1. Output Filename – enter text `sub001_pib_SUM50-70min.nii`
       1. Output Directory – specify the output directory for the file. If you leave this
 blank, SPM will output the file in the present working directory (i.e., the
@@ -133,21 +135,12 @@ for amyloid PET as it typically has negligible specific binding in the cerebellu
 
      **Do you think this person is amyloid positive or negative?**
       
-   1. Repeat the above steps to generate the SUM image for the early frame data. Make sure
-to remove the previous volumes before adding the new volume in the Input Images. You
-will need to use the first seven frames corresponding to the first 20 min of data. Note
-that the frames are not all the same duration and a straight average is no longer
-equivalent to summing all of the counts and dividing by the total time. How can we use a
-weighted average to account for the differences in frame durations between the first five
-and last two frames of the first 20 minutes?
+   1. Repeat the above steps to generate the SUM image for the early frame data. Make sure to remove the previous volumes before adding the new volume in the Input Images. You will need to use the first seven frames corresponding to the first 20 min of data. Note that the frames are not all the same duration and a straight average is no longer equivalent to summing all of the counts and dividing by the total time. How can we use a weighted average to account for the differences in frame durations between the first five and last two frames of the first 20 minutes?
        ```matlab
        (i1*2 + i2*2 + i3*2 + i4*2 +i5*2 + i6*5 + i7*5) / 20
        ```
       1. Name this file `sub001_pib_SUM0-20min.nii`
-   1. Open the 0-20 min SUM image in FSLeyes and compare to the 50-70 min SUM image.
-Note the differences in GM/WM contrast between the images and the differences in
-noise properties. You will likely have to change the max intensity settings in both images
-to be able to observe the differences in contrast.
+   1. Open the 0-20 min SUM image in FSLeyes and compare to the 50-70 min SUM image. Note the differences in GM/WM contrast between the images and the differences in noise properties. You will likely have to change the max intensity settings in both images to be able to observe the differences in contrast.
    1. Close the SPM batch editor
 
 ### Image Smoothing
